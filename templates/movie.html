@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icon.png')}}">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" id="navbar-logo">Movieverse</a>
+            <div class="navbar-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="/" class="navbar-links">Home</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/search" class="navbar-links">Search</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--Everything Else-->
+    <div class="movie-data-primary-box">
+        <img src="{{movieData[7]}}" alt = "Movie Poster" class = "movie-poster">
+        <h1>{{ movieData[0] }}</h1>
+        <h1>{{ movieData[1] }}</h1>
+        <h1>{{ movieData[2] }}</h1>
+        <h1>{{ movieData[3] }}</h1>
+        <h1>{{ movieData[4] }}</h1>
+        <h1>{{ movieData[5] }}</h1>
+        <h1>{{ movieData[6][:4] }}</h1>
+    </div>
+</body>
+</html>

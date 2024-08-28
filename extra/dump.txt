@@ -1,0 +1,26 @@
+        {% for movie in movies %}
+            <h1>{{ movie.movieName }}</h1>
+            <h1>Director: {{ movie.movieDirector }}</h1>
+            <h1>Movie Length: {{ movie.movieLength }}</h1>
+            <h1>Movie Rating: {{ movie.movieRating }}</h1>
+            <h1>Movie Release Date: {{ movie.movieReleaseDate }}</h1>
+        {% endfor %}
+
+
+Popcorn Icon: https://www.rawpixel.com/search/sticker%20popcorn?page=1&path=_topics&sort=curated
+
+Fonts:
+https://www.dafont.com/mtheme.php?id=1&text=Movieverse&fpp=200&af=on
+https://www.dafont.com/brighton-vintage.font?fpp=200&text=Movieverse
+https://www.dafont.com/komika-axis.font?fpp=200&text=Movieverse
+
+Sources:
+https://www.themoviedb.org
+https://developer.themoviedb.org/docs/getting-started
+https://www.digitalocean.com/community/tutorials/python-remove-character-from-string
+https://stackoverflow.com/questions/35107885/how-to-generate-dynamic-urls-in-flask
+https://www.youtube.com/watch?v=wgRwITQHszU
+
+
+Information on a page:
+Title, Summary, Rating, Release Date, Length,  Director, Genre
