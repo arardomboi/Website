@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import Database as db
 #Class init
-class movieStats:
+class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
         self.title = Title
         self.summary = Summary
@@ -23,7 +23,7 @@ genreData = response.json()
 genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
 
 #Function(s) for Moviedb
-def returnMovieDBData(Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0", movieName = "none"):
+def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
     #Error Check
     if movieName == "none":
         return ["Movie name missing/invalid"]
@@ -49,12 +49,13 @@ def returnMovieDBData(Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0", movie
     for genre in genreIDList:
         genreList.append(genre["name"])
     #holy large return statement
-    movieData =  movieStats(movie["title"].title(),
+    print(movie)
+    movieData =  movieStatsClass(movie["title"].title(),
                             movie["overview"],
                             movie["vote_average"],
                             movie["release_date"],
-                            movie.get("runtime"),
-                            directorList,
+                            movie.get("runtime"), #keeps returning "None"
+                            directorList[0],
                             genreList,
                             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}")
     return movieData

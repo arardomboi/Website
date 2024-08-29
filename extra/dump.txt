@@ -19,8 +19,8 @@ https://www.themoviedb.org
 https://developer.themoviedb.org/docs/getting-started
 https://www.digitalocean.com/community/tutorials/python-remove-character-from-string
 https://stackoverflow.com/questions/35107885/how-to-generate-dynamic-urls-in-flask
-https://www.youtube.com/watch?v=wgRwITQHszU
-
+https://www.youtube.com/watch?v=wgRwITQHszU MYSQL Install/ Create database
+https://www.youtube.com/watch?v=5OdVJbNCSso MySQL tutorial
 
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
