@@ -12,6 +12,8 @@ class movieStatsClass:
         self.director = Director
         self.genreList = GenreList
         self.posterLink = posterLink
+    def returnAsList(self):
+        return [self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink]
 
 #The Moviedb
 global genreDict
@@ -49,7 +51,6 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
     for genre in genreIDList:
         genreList.append(genre["name"])
     #holy large return statement
-    print(movie)
     movieData =  movieStatsClass(movie["title"].title(),
                             movie["overview"],
                             movie["vote_average"],
