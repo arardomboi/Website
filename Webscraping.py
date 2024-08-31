@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import Database as db
 #Class init
 class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
@@ -50,16 +49,21 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
     genreList = []
     for genre in genreIDList:
         genreList.append(genre["name"])
+    #checking if runtime returns 'None'
+    if not movie.get("runtime"):
+        print(f"Error returning '{movieName.title()}'runtime, defaulting to 138.")
+        movieRuntime = 138
+    else:
+        movieRuntime = movie.get("runtime")
     #holy large return statement
-    movieData =  movieStatsClass(movie["title"].title(),
-                            movie["overview"],
-                            movie["vote_average"],
-                            movie["release_date"],
-                            movie.get("runtime"), #keeps returning "None"
-                            directorList[0],
-                            genreList,
-                            f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}")
-    return movieData
+    return [movie["title"].title(),
+            movie["overview"],
+            movie["vote_average"],
+            movie["release_date"],
+            movieRuntime, #keeps returning "None"
+            directorList[0],
+            genreList,
+            f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
 #Odeon
 #Showcase
 #Vue
