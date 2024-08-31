@@ -74,10 +74,3 @@ def returnMovieData(movieName):
         return movieData
     print("Movie returned from database.")
     return var[1]
-#trials
-"""movieData = wb.returnMovieDBData("Titanic")
-movieData.genreList = convertListToString(movieData.genreList)
-print(movieData.length)"""
-#addDataToMovieData(movieData)
-movieName = "Minions"
-print(returnMovieData(movieName))

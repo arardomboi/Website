@@ -1,6 +1,6 @@
 #IMPORTS
 from flask import Flask, render_template
-import Database as db
+import sql
 #PYTHON
 
 def removeURLPunctuation(movieName):
@@ -23,19 +23,24 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    print("Rendering home page.")
     return render_template("home.html")
 
 @app.route("/search")
 def search():
+    print("Rendering Search page")
     return render_template("search.html")
 
 @app.route("/movie")
 def movieBase():
+    print("Rendering base movie template.")
     movieDataTemplate = ["Title", "Summmary", "Rating", "Release Date", "Movie Length", "Directors", ["Genre 1","Genre 2","Genre 3", "Genre 4"], "Image link"]
     return render_template("movie.html", movieData = movieDataTemplate)
+
 @app.route("/movie/<movieName>")
 def moviePage(movieName):
-    movieData = db.returnMovieStats(movieName)
+    print(f"Rendering movie page with movie as {movieName}.")
+    movieData = sql.returnMovieData(movieName)
     return render_template("movie.html", movieData = movieData)
 
 if __name__ == "__main__":

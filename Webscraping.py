@@ -29,7 +29,7 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
     if movieName == "none":
         return ["Movie name missing/invalid"]
     #Getting General Data
-    dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}"    
+    dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"    
     response = requests.get(dataURL)
     data = response.json()
     #NEED TO WORK ON
