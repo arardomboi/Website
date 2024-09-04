@@ -1,5 +1,6 @@
 import requests
-from bs4 import BeautifulSoup
+import bs4 as bs
+import urllib.request
 #Class init
 class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
@@ -64,8 +65,19 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
             directorList[0],
             genreList,
             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
-#Odeon
+#Odeon - bs4 not work
+    #bs4 doesn't work
+pass
 #Showcase
+    #bs4 works
+showcaseSourceURL = urllib.request.urlopen("").read()
+soup = bs.BeautifulSoup(showcaseSourceURL, "lxml")
+
+pass
 #Vue
+
+pass
 #Cineworld
+pass
 #Savoy
+pass
