@@ -21,6 +21,8 @@ https://www.digitalocean.com/community/tutorials/python-remove-character-from-st
 https://stackoverflow.com/questions/35107885/how-to-generate-dynamic-urls-in-flask
 https://www.youtube.com/watch?v=wgRwITQHszU MYSQL Install/ Create database
 https://www.youtube.com/watch?v=5OdVJbNCSso MySQL tutorial
+https://selenium-python.readthedocs.io/getting-started.html#simple-usage Selenium tutorial
+https://www.selenium.dev/documentation/webdriver/elements/locators/ Selenium tutorial
 
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
