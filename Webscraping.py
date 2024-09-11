@@ -14,7 +14,7 @@ class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
         self.title = Title
         self.summary = Summary
-        self.rating = f"{round(Rating/2)}/10"
+        self.rating = f"{round(float(Rating)/2)}/10"
         self.releaseDate = ReleaseDate
         self.length = Length
         self.director = Director
@@ -23,6 +23,24 @@ class movieStatsClass:
     def returnAsList(self):
         return [self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
 
+def convertToDict(movieList = None, typeSource = None):
+    if typeSource == "webscrape": #bruh
+        n = 0
+    elif typeSource == "database":
+        n = 1
+    elif typeSource == None:
+        raise Exception(f"Error in type of typesource, {typeSource} is invalid.")
+    movieDict = {
+        "movieTitle" : movieList[n],
+        "movieSummary" : movieList[n+1],
+        "movieRating" : movieList[n+2],
+        "movieReleaseDate" : movieList[n+3],
+        "movieLength" : movieList[n+4],
+        "movieDirector" : movieList[n+5],
+        "movieGenres" : movieList[n+6],
+        "moviePosterLink" : movieList[n+7]
+    }
+    return movieDict
 #The Moviedb
 global genreDict
 Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"
@@ -33,9 +51,9 @@ genreData = response.json()
 genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
 
 #Function(s) for Moviedb
-def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
+def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
     #Error Check
-    if movieName == "none":
+    if movieName == None:
         return ["Movie name missing/invalid"]
     #Getting General Data
     dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
@@ -65,7 +83,7 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
     else:
         movieRuntime = movie.get("runtime")
     #holy large return statement
-    return [movie["title"].title(),
+    movieList =  [movie["title"].title(),
             movie["overview"],
             movie["vote_average"],
             movie["release_date"],
@@ -73,7 +91,18 @@ def returnMovieDBData(movieName = "none", Moviedb_APIKEY = "66ab025a7673a17b6e97
             directorList[0],
             genreList,
             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
+    movieDict = convertToDict(movieList = movieList, typeSource="webscrape")
+    return movieDict
 #Odeon
+def returnODEONDates(movieName = None):
+    firefoxOptions = Options()
+    #firefoxOptions.add_argument("--headless")
+    driver = webdriver.Firefox()
+    driver.get("https://www.odeon.co.uk")
+    t.sleep(4)
+    driver.find_element(By.ID, "onetrust-accept-btn-handler").click() #click on accept popup
+    driver.find_element(By.CLASS_NAME, "banner-icon").click() #click on search box
+"""
 print("ODEON")
 print("init firefox driver")
 firefoxOptions = Options()
@@ -101,7 +130,7 @@ t.sleep(0.5)
 #find search page
 searchBar = driver.find_element(By.CLASS_NAME, "auto-complete")
 driver.quit()
-
+"""
 #Showcase
     #bs4 works
 """showcaseSourceURL = urllib.request.urlopen("https://www.showcasecinemas.co.uk/movies/251633-deadpool-and-wolverine/").read()

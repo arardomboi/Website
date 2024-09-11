@@ -3,11 +3,12 @@ import sqlite3 as sql
 import Webscraping as wb
 #Yea
 global cursor
-conn = sql.connect("static/Database.db")
+conn = sql.connect("static/Database.db", check_same_thread=False)
 cursor = conn.cursor()
 #Functions
 def classify(movieList): #idk
-    movieDataClass = wb.movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
+    print(movieList)
+    movieDataClass = wb.movieStatsClass(movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7], movieList[8])
     movieDataClass.genreList = convertListToString(movieDataClass.genreList)
     return movieDataClass
 
@@ -16,6 +17,7 @@ def convertListToString(dataList):
     for item in dataList:
         var += f", {str(item)}"
     return var
+
 def convertStringToList(dataString):
     var = dataString.split(", ")
     return var
@@ -49,28 +51,28 @@ def addDataToMovieData(movieList):
     conn.commit()
     print("Movie data added to database.")
 
-def checkDatabase(movieName):
+def checkDatabase(movieID):
     #Select statement
     temp = cursor.execute(f"""SELECT * FROM movieData
-                   WHERE movieName = '{movieName}'; 
+                   WHERE movieID = '{movieID}'; 
                    """)
     result = cursor.fetchall()
-    #For loop in list of results
-    for row in result:
-        if row[1] == movieName: #Row is tuple data type
-            print("Movie found in database.")
-            return [True,row] #Returns both true for finding the movie, and the tuple of the movie data
-    print("Movie not found :(.")
-    return [False,None] #Returns false and None to stop a index error
+    #Result is list of tuple(s)
+    if len(result) != 0:
+        print("Movie found in database.")
+        return [True, result[0]]
+    else:
+        print("Movie not found in database.")
+        return [False, None]
 
-
-def returnMovieData(movieName):
-    var = checkDatabase(movieName)
-    #If not in database
-    if not var[0]:
-        print("Movie returned from webscraping.")
-        movieData = wb.returnMovieDBData(movieName)
-        addDataToMovieData(movieData)
-        return movieData
-    print("Movie returned from database.")
-    return var[1]
+def returnMovieDataByID(movieID):
+    databaseCheck = checkDatabase(movieID)
+    #If in database:
+    if databaseCheck:
+        print("Returning dictionary of movieData")
+        var = wb.convertToDict(movieList = databaseCheck[1], typeSource = "database")
+        return var
+    else:
+        raise Exception("What now :(")
+        dataList = wb.returnMovieDBData()
+        print("raise error")

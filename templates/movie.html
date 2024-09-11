@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/moviePageStyle.css') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icon.png')}}">
     <link rel="manifest" href="/site.webmanifest">
 </head>
@@ -30,14 +30,15 @@
     </nav>
     <!--Everything Else-->
     <div class="movie-data-primary-box">
-        <img src="{{movieData[7]}}" alt = "Movie Poster" class = "movie-poster">
-        <h1>{{ movieData[0] }}</h1>
-        <h1>{{ movieData[1] }}</h1>
-        <h1>{{ movieData[2] }}</h1>
-        <h1>{{ movieData[3] }}</h1>
-        <h1>{{ movieData[4] }}</h1>
-        <h1>{{ movieData[5] }}</h1>
-        <h1>{{ movieData[6][:4] }}</h1>
+        <img src="{{movieDict['moviePosterLink']}}" alt = "Movie Poster" class = "movie-poster">
+        <h1>{{movieDict["movieTitle"]}}</h1>
+        <h1>{{movieDict["movieSummary"]}}</h1>
+        <h1>{{movieDict["movieRating"]}}</h1>
+        <h1>{{movieDict["movieReleaseDate"]}}</h1>
+        <h1>{{movieDict["movieLength"]}}</h1>
+        <h1>{{movieDict["movieDirector"]}}</h1>
+        <h1>{{movieDict["movieGenres"]}}</h1>
+
     </div>
 </body>
 </html>

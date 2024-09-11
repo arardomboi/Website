@@ -37,11 +37,12 @@ def movieBase():
     movieDataTemplate = ["Title", "Summmary", "Rating", "Release Date", "Movie Length", "Directors", ["Genre 1","Genre 2","Genre 3", "Genre 4"], "Image link"]
     return render_template("movie.html", movieData = movieDataTemplate)
 
-@app.route("/movie/<movieName>")
-def moviePage(movieName):
-    print(f"Rendering movie page with movie as {movieName}.")
-    movieData = sql.returnMovieData(movieName)
-    return render_template("movie.html", movieData = movieData)
+@app.route("/movie/<movieID>")
+def moviePage(movieID):
+    print(f"Rendering movie page with movieID as {movieID}.")
+    movieDict = sql.returnMovieDataByID(movieID)
+
+    return render_template("movie.html", movieDict = movieDict)
 
 if __name__ == "__main__":
     app.run(debug=True)
