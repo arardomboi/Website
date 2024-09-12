@@ -73,33 +73,25 @@ img {
     justify-content: flex-start;
 }
 
-.primary-box {
+.box {
     width: 700px;
     height: 400px;
     background: radial-gradient(black,grey);
     color: white;
     position: absolute;
-    left: 10%;
-    top: 10%;
     font-family: 'Times New Roman', Times, serif;
     font-weight: normal !important; /* Same as L68 */
     justify-content: flex-start;
     z-index: 0;
-
+    top: 10%;
 }
 
-.secondary-box {
-    width: 700px;
-    height: 400px;
-    background: radial-gradient(black,grey);
-    color: white;
-    position: absolute;
-    left: 25%;
-    top: 10%;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: normal !important; /* Same as L68 */
-    justify-content: flex-start;
-    z-index: 0;
+.box-primary {
+    left: 10%;
+}
+
+.box-secondary {
+    left: 50%;
 }
 
 .flex-title {
