@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#navbar-logo {
+    background-color: #ff8177;
+    background-image: linear-gradient(to right, #f01149, #ff8177);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    font-size: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: none;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+}
+
+.navbar-item {
+    margin-left: 20px;
+}
+
+.navbar-links {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+.center-title {
+    text-align: center;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #f01149, #ff8177);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal !important; /*Doesnt seem to work, relies on * class to not be bold (for some reason) */
+    justify-content: flex-start;
+}
+
+.flex-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 2;
+    flex-direction: column;
+    position: absolute;
+    left: 135px;
+    padding: 10px;
+}

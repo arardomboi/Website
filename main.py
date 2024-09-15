@@ -1,6 +1,6 @@
 #IMPORTS
-from flask import Flask, render_template
-import sql
+from flask import Flask, render_template #not me
+import sql #me
 #PYTHON
 
 def removeURLPunctuation(movieName):
@@ -44,6 +44,9 @@ def moviePage(movieID):
 
     return render_template("movie.html", movieDict = movieDict)
 
+@app.route("/Sign-up")
+def signPage():
+    return render_template("Registration.html")
 if __name__ == "__main__":
     app.run(debug=True)
 

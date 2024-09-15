@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/homePageStyle.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icon.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signPageStyle.css') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('images', filename='icon.png')}}">
     <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
@@ -34,22 +34,6 @@
             </ul>
         </div>
     </nav>
-    <!--Text Boxes-->
-    <div class = "container">
-        <!--Top Movie-->
-        <div class = "primary-box">
-            <h1 class = "flex-title">Movie Title</h1>
-            <img src="/static/popular_movie.png" alt = "Movie Poster" class = "movie-poster">
-            <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
-            <h3 class = "movie-description">Description</h3>
-        </div>
-        <!--Random Movie-->
-        <div class="secondary-box">
-            <h1 class = "flex-title">Movie Title</h1>
-            <img src="/static/random_movie.png" alt = "Movie Poster" class = "movie-poster">
-            <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
-            <h3 class = "movie-description">Description</h3>
-        </div>
-    </div>
+    <!--Everything Else-->
 </body>
 </html>

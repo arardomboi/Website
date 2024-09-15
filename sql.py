@@ -1,11 +1,15 @@
 #Imports
-import sqlite3 as sql
-import Webscraping as wb
+import sqlite3 as sql #me
+import Webscraping as wb #me
+import hashlib #not me
 #Yea
+print("Connecting to database.")
 global cursor
 conn = sql.connect("static/Database.db", check_same_thread=False)
 cursor = conn.cursor()
-#Functions
+print("Connected successfully.")
+#Movie Data
+
 def classify(movieList): #idk
     print(movieList)
     movieDataClass = wb.movieStatsClass(movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7], movieList[8])
@@ -68,11 +72,56 @@ def checkDatabase(movieID):
 def returnMovieDataByID(movieID):
     databaseCheck = checkDatabase(movieID)
     #If in database:
-    if databaseCheck:
+    if databaseCheck[0]:
         print("Returning dictionary of movieData")
         var = wb.convertToDict(movieList = databaseCheck[1], typeSource = "database")
         return var
     else:
         raise Exception("What now :(")
         dataList = wb.returnMovieDBData()
-        print("raise error")
+
+#Sign Up/ Log In
+
+def createUserDatabase():
+    cursor.execute("""CREATE TABLE userData (
+                   userID INTEGER PRIMARY KEY AUTOINCREMENT,
+                   firstName VARCHAR(50),
+                   lastName VARCHAR(50),
+                   userName VARCHAR (30),
+                   email VARHCAR(100) NOT NULL,
+                   hashedPassword TEXT);""")
+    print("User Data table created successfully.")
+
+def createReviewDatabase():
+    cursor.execute("""CREATE TABLE reviewData (
+                   reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
+                   movieID INTEGER,
+                   userID INTEGER,
+                   reviewText TEXT,
+                   movieRating INTEGER
+                   reviwDate DATE,
+                   FOREIGN KEY (movieID) REFERENCES movieData(movieID),
+                   FOREIGN KEY (userID) REFERENCES userData(userID));""")
+    print("Review Data table created successfully.")
+
+def deleteUserDatabase():
+    try:
+        cursor.execute("""DROP TABLE userData;""")
+        print("Deleted userData table successfully.")
+    except:
+        print("Error deleting userData table")
+
+def deleteReviewDatabase():
+    try:
+        cursor.execute("DROP TABLE reviewData")
+        print("Deleted reviewData table successfully.")
+    except:
+        print("Error deleting reviewData.")
+
+def checkUserDatabasePresence(userName, password):
+    temp = cursor.execute(f"""SELECT * FROM userData
+                   WHERE userName = '{userName}'; 
+                   """)
+    result = cursor.fetchall()
+    if len(result) == 0:
+        return False
