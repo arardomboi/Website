@@ -6,6 +6,22 @@
             <h1>Movie Release Date: {{ movie.movieReleaseDate }}</h1>
         {% endfor %}
 
+    if len(result) == 0:
+        return False
+    #collecting first tuple (only tuple) from list
+    userPassList = result[0]
+    tableUserName = userPassList[0]
+    tableHashedPassword = userPassList[1]
+    hashedPassword = hashlib.sha256(password.encode("utf-8")).hexdigest()
+    if tableUserName.lower() == userName.lower() and tableHashedPassword == hashedPassword:
+        print("Username AND Password CORRECT.")
+        return [True, True]
+    elif tableUserName.lower() == userName.lower() and not(tableHashedPassword == hashedPassword):
+        print("Username RIGHT Pasword WRONG")
+        return [True, False]
+    else:
+        print("Username AND Password WRONG")
+        return [False, False]
 
 Popcorn Icon: https://www.rawpixel.com/search/sticker%20popcorn?page=1&path=_topics&sort=curated
 
@@ -24,6 +40,7 @@ https://www.youtube.com/watch?v=5OdVJbNCSso MySQL tutorial
 https://selenium-python.readthedocs.io/getting-started.html#simple-usage Selenium tutorial
 https://www.selenium.dev/documentation/webdriver/elements/locators/ Selenium tutorial
 https://stackoverflow.com/questions/1884818/how-do-i-add-a-foreign-key-to-an-existing-sqlite-table sql foreign key
+https://docs.python.org/3/library/hashlib.html hashing passwords
 
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre

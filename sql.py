@@ -8,9 +8,8 @@ global cursor
 conn = sql.connect("static/Database.db", check_same_thread=False)
 cursor = conn.cursor()
 print("Connected successfully.")
-#Movie Data
-
-def classify(movieList): #idk
+#Moviedb Table
+def classifyMovieList(movieList): #idk
     print(movieList)
     movieDataClass = wb.movieStatsClass(movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7], movieList[8])
     movieDataClass.genreList = convertListToString(movieDataClass.genreList)
@@ -26,13 +25,6 @@ def convertStringToList(dataString):
     var = dataString.split(", ")
     return var
 
-def deleteTableMovieData():
-    try:
-        cursor.execute("DROP TABLE movieData;")
-        print("Table 'movieData' deleted successfully.")
-    except:
-        print("Error deleting table 'movieData'.")
-
 def createTableMovieData():
     cursor.execute("""CREATE TABLE movieData (
                    movieID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,15 +39,22 @@ def createTableMovieData():
                    );""")
     print("Table 'movieData' made.")
 
+def deleteTableMovieData():
+    try:
+        cursor.execute("DROP TABLE movieData;")
+        print("Table 'movieData' deleted successfully.")
+    except:
+        print("Error deleting table 'movieData'.")
+
 def addDataToMovieData(movieList):
-    movieDataClass = classify(movieList)
+    movieDataClass = classifyMovieList(movieList)
     cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
                    (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreList, movieDataClass.posterLink))
     conn.commit()
     print("Movie data added to database.")
 
-def checkDatabase(movieID):
+def checkMovieDataTable(movieID):
     #Select statement
     temp = cursor.execute(f"""SELECT * FROM movieData
                    WHERE movieID = '{movieID}'; 
@@ -70,7 +69,7 @@ def checkDatabase(movieID):
         return [False, None]
 
 def returnMovieDataByID(movieID):
-    databaseCheck = checkDatabase(movieID)
+    databaseCheck = checkMovieDataTable(movieID)
     #If in database:
     if databaseCheck[0]:
         print("Returning dictionary of movieData")
@@ -81,47 +80,119 @@ def returnMovieDataByID(movieID):
         dataList = wb.returnMovieDBData()
 
 #Sign Up/ Log In
+def dictUserData(userList):
+    userDict = {
+        "userID" : userList[0],
+        "firstName" : userList[1],
+        "lastName" : userList[2],
+        "userName" : userList[3],
+        "email" : userList[4],
+        "hashedPassword" : userList[5],
+        "age" : userList[6],
+        "gender" : userList[7]
+    }
+    return userDict
 
-def createUserDatabase():
+def dictReviewData(reviewList):
+    reviewDict = {
+        "reviewID" : reviewList[0],
+        "movieID" : reviewList[1],
+        "userID" : reviewList[2],
+        "reviewText" : reviewList[3],
+        "movieRating" : reviewList[4],
+        "reviewDate" : reviewList[5],
+    }
+    return reviewDict
+
+def createUserTable():
     cursor.execute("""CREATE TABLE userData (
                    userID INTEGER PRIMARY KEY AUTOINCREMENT,
                    firstName VARCHAR(50),
                    lastName VARCHAR(50),
                    userName VARCHAR (30),
                    email VARHCAR(100) NOT NULL,
-                   hashedPassword TEXT);""")
+                   hashedPassword TEXT NOT NULL,
+                   age INTEGER,
+                   gender CHARACTER);""")
     print("User Data table created successfully.")
 
-def createReviewDatabase():
-    cursor.execute("""CREATE TABLE reviewData (
-                   reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-                   movieID INTEGER,
-                   userID INTEGER,
-                   reviewText TEXT,
-                   movieRating INTEGER
-                   reviwDate DATE,
-                   FOREIGN KEY (movieID) REFERENCES movieData(movieID),
-                   FOREIGN KEY (userID) REFERENCES userData(userID));""")
-    print("Review Data table created successfully.")
-
-def deleteUserDatabase():
+def deleteUserTable():
     try:
         cursor.execute("""DROP TABLE userData;""")
         print("Deleted userData table successfully.")
     except:
         print("Error deleting userData table")
 
-def deleteReviewDatabase():
+def resetUserTable():
+    try:
+        deleteUserTable()
+        createReviewTable()
+    except:
+        createUserTable()
+    print("UserData table reset successfully.")
+
+def createReviewTable():
+    cursor.execute("""CREATE TABLE reviewData (
+                   reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
+                   movieID INTEGER,
+                   userID INTEGER,
+                   reviewText TEXT,
+                   movieRating INTEGER
+                   reviewDate DATE,
+                   FOREIGN KEY (movieID) REFERENCES movieData(movieID),
+                   FOREIGN KEY (userID) REFERENCES userData(userID));""")
+    print("Review Data table created successfully.")
+
+def deleteReviewTable():
     try:
         cursor.execute("DROP TABLE reviewData")
         print("Deleted reviewData table successfully.")
     except:
         print("Error deleting reviewData.")
 
-def checkUserDatabasePresence(userName, password):
-    temp = cursor.execute(f"""SELECT * FROM userData
+def resetReviewDataTable():
+    try:
+        deleteReviewTable()
+        createReviewTable()
+    except:
+        createReviewTable()
+    print("ReviewData table reset successfully.")
+
+def addUserDataToUserTable(userDict):
+    if not checkUserTablePresenceByUsername(userDict["userName"]): #if user not found
+        cursor.execute(""" INSERT INTO userData (firstName, lastName, userName, email, hashedPassword, age, gender)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
+                   (userDict["firstName"], userDict["lastName"], userDict["userName"], userDict["email"], userDict["hashedPassword"], userDict["age"], userDict["gender"]))
+        conn.commit()
+        print("userData added to userTable successfully.") 
+    else: #if user found
+        print(f"Entry for user {userDict["username"]} already found in userTable.")
+
+def checkUserTablePresenceByUsername(userName = None):
+    #Error Checking
+    if not(userName):
+        print("Error with username.")
+        return False
+    #select where usernames match
+    temp = cursor.execute(f"""SELECT userName FROM userData
                    WHERE userName = '{userName}'; 
                    """)
     result = cursor.fetchall()
+    #If list is empty
     if len(result) == 0:
         return False
+    return True
+
+def checkUserTablePresenceByID(userID = None):
+    #Error Checking
+    if not(userID):
+        print("Error with userID")
+        return False
+    #Select statement
+    temp = cursor.execute(f"""SELECT * FROM userData
+                          WHERE userID = {userID}""")
+    result = cursor.fetchall()
+    #If list is empty
+    if len(result) == 0:
+        return False
+    return True

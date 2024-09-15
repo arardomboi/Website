@@ -47,7 +47,6 @@ def moviePage(movieID):
 @app.route("/Sign-up")
 def signPage():
     return render_template("Registration.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
-
-print("Process Ended.")
