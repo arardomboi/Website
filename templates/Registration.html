@@ -36,9 +36,22 @@
         </nav>
         <!--Everything Else-->
         {%if sendType == 1 %}
-        <h1>Log in</h1>
-        {%elif sendType == 2%}
-        <h2>Sign up</h2>
+        <h1>Sign Up</h1>
+        {%elif sendType == 2 %}
+        <div class = "log-in-box ">
+            <h1>Create Your Account:</h1>
+            <form>
+                <label for = "fname">First Name:</label><br>
+                <input type = "text" id = "fname" name = "fname"><br>
+                <label for = "lname">Last Name:</label><br>
+                <input type = "text" id = "lname" name = "lname"><br>
+                <label for = "email">Email:</label><br>
+                <input type = "text" id = "email" name = "email"><br>
+                <label for = "password">Password:</label><br>
+                <input type = "text" id = "password" name = "password">
+                <input type = "submit" id = submit name = "submit" >
+            </form>
+        </div>
         {%endif%}
     </body>
 </html>

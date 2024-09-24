@@ -82,3 +82,16 @@ img {
     left: 135px;
     padding: 10px;
 }
+
+.log-in-box {
+    flex-direction: column;
+    left: 40%;
+    top: 20%;
+    border: 100px black;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    left: 135px;
+}

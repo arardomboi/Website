@@ -42,6 +42,6 @@ https://www.selenium.dev/documentation/webdriver/elements/locators/ Selenium tut
 https://stackoverflow.com/questions/1884818/how-do-i-add-a-foreign-key-to-an-existing-sqlite-table sql foreign key
 https://docs.python.org/3/library/hashlib.html hashing passwords
 https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python selenium wait until
-
+https://www.w3schools.com/html/html_forms.asp html forms
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
