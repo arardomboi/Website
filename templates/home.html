@@ -1,55 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/homePageStyle.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icon.png')}}">
-    <link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-    <!-- Navbar Section -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" id="navbar-logo">Movieverse</a>
-            <div class="navbar-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/homePageStyle.css') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png')}}">
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <!-- Navbar Section -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" id="navbar-logo">Movieverse</a>
+                <div class="navbar-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar-menu">
+                    <li class="navbar-item">
+                        <a href="/" class="navbar-links">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/search" class="navbar-links">Search</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="Log-in" class = "navbar-links">Log In</a>
+                    </li>
+                </ul>
             </div>
-            <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="/" class="navbar-links">Home</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/search" class="navbar-links">Search</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/Sign-up" class = "navbar-links">Sign Up</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="Log-in" class = "navbar-links">Log In</a>
-                </li>
-            </ul>
+        </nav>
+        <!--Text Boxes-->
+        <div class = "container">
+            <!--Top Movie-->
+            <div class = "primary-box">
+                <h1 class = "flex-title">Movie Title</h1>
+                <img src="/static/popular_movie.png" alt = "Movie Poster" class = "movie-poster">
+                <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
+                <h3 class = "movie-description">Description</h3>
+            </div>
+            <!--Random Movie-->
+            <div class="secondary-box">
+                <h1 class = "flex-title">Movie Title</h1>
+                <img src="/static/random_movie.png" alt = "Movie Poster" class = "movie-poster">
+                <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
+                <h3 class = "movie-description">Description</h3>
+            </div>
         </div>
-    </nav>
-    <!--Text Boxes-->
-    <div class = "container">
-        <!--Top Movie-->
-        <div class = "primary-box">
-            <h1 class = "flex-title">Movie Title</h1>
-            <img src="/static/popular_movie.png" alt = "Movie Poster" class = "movie-poster">
-            <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
-            <h3 class = "movie-description">Description</h3>
-        </div>
-        <!--Random Movie-->
-        <div class="secondary-box">
-            <h1 class = "flex-title">Movie Title</h1>
-            <img src="/static/random_movie.png" alt = "Movie Poster" class = "movie-poster">
-            <h3 class = "movie-rating"> ⭐ 0.0/10<br>XXh YYm</h3>
-            <h3 class = "movie-description">Description</h3>
-        </div>
-    </div>
-</body>
+    </body>
 </html>

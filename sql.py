@@ -73,36 +73,30 @@ def returnMovieDataByID(movieID):
     #If in database:
     if databaseCheck[0]:
         print("Returning dictionary of movieData")
-        var = wb.convertToDict(movieList = databaseCheck[1], typeSource = "database")
+        var = wb.classify(databaseCheck[1][1:])
         return var
     else:
         raise Exception("What now :(")
         dataList = wb.returnMovieDBData()
 
 #Sign Up/ Log In
-def dictUserData(userList):
-    userDict = {
-        "userID" : userList[0],
-        "firstName" : userList[1],
-        "lastName" : userList[2],
-        "userName" : userList[3],
-        "email" : userList[4],
-        "hashedPassword" : userList[5],
-        "age" : userList[6],
-        "gender" : userList[7]
-    }
-    return userDict
 
-def dictReviewData(reviewList):
-    reviewDict = {
-        "reviewID" : reviewList[0],
-        "movieID" : reviewList[1],
-        "userID" : reviewList[2],
-        "reviewText" : reviewList[3],
-        "movieRating" : reviewList[4],
-        "reviewDate" : reviewList[5],
-    }
-    return reviewDict
+#init class
+class userClass:
+    def __init__(self, firstName, lastName, userName, email, hashedPassword, age, gender):
+        self.fName = firstName
+        self.lName = lastName
+        self.uName = userName
+        self.email = email
+        self.hashPass = hashedPassword
+        self.age = age
+        self.gender = gender
+    def returnAsList(self):
+        return [self.fName,self.lName,self.uName,self.email,self.hashPass,self.age,self.gender]
+    
+#functions
+def classifyUserDataSQL(userList):
+    classTemp = userClass(userList[0], userList[1], userList[2], userList[3], userList[4], userList[5], userList[6], userList[7], userList[8], userList[9])
 
 def createUserTable():
     cursor.execute("""CREATE TABLE userData (
@@ -114,24 +108,17 @@ def createUserTable():
                    hashedPassword TEXT NOT NULL,
                    age INTEGER,
                    gender CHARACTER);""")
-    print("User Data table created successfully.")
-
-def deleteUserTable():
-    try:
-        cursor.execute("""DROP TABLE userData;""")
-        print("Deleted userData table successfully.")
-    except:
-        print("Error deleting userData table")
 
 def resetUserTable():
     try:
-        deleteUserTable()
-        createReviewTable()
+        cursor.execute("""DROP TABLE userData;""")
+        createUserTable()
     except:
         createUserTable()
+
     print("UserData table reset successfully.")
 
-def createReviewTable():
+def createReviewDataTable():
     cursor.execute("""CREATE TABLE reviewData (
                    reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
                    movieID INTEGER,
@@ -141,32 +128,34 @@ def createReviewTable():
                    reviewDate DATE,
                    FOREIGN KEY (movieID) REFERENCES movieData(movieID),
                    FOREIGN KEY (userID) REFERENCES userData(userID));""")
-    print("Review Data table created successfully.")
-
-def deleteReviewTable():
-    try:
-        cursor.execute("DROP TABLE reviewData")
-        print("Deleted reviewData table successfully.")
-    except:
-        print("Error deleting reviewData.")
 
 def resetReviewDataTable():
     try:
-        deleteReviewTable()
-        createReviewTable()
+        #delete
+        cursor.execute("DROP TABLE reviewData")
+        #create
+        cursor.execute("""CREATE TABLE reviewData (
+                   reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
+                   movieID INTEGER,
+                   userID INTEGER,
+                   reviewText TEXT,
+                   movieRating INTEGER
+                   reviewDate DATE,
+                   FOREIGN KEY (movieID) REFERENCES movieData(movieID),
+                   FOREIGN KEY (userID) REFERENCES userData(userID));""")
+        print("Review Data table created successfully.")
     except:
-        createReviewTable()
-    print("ReviewData table reset successfully.")
+        createReviewDataTable()
 
-def addUserDataToUserTable(userDict):
-    if not checkUserTablePresenceByUsername(userDict["userName"]): #if user not found
+def addUserDataToUserTable(userClass):
+    if not checkUserTablePresenceByUsername(userClass.uName): #if user not found by username
         cursor.execute(""" INSERT INTO userData (firstName, lastName, userName, email, hashedPassword, age, gender)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                   (userDict["firstName"], userDict["lastName"], userDict["userName"], userDict["email"], userDict["hashedPassword"], userDict["age"], userDict["gender"]))
+                   (userClass.fName,userClass.lName,userClass.uName,userClass.email,userClass.hashPass,userClass.age,userClass.gender))#OEWBGIOREBGIREBGREWBGOIUREJBOERIUBG
         conn.commit()
         print("userData added to userTable successfully.") 
     else: #if user found
-        print(f"Entry for user {userDict["username"]} already found in userTable.")
+        print(f"Entry for user {userClass.fName} already found in userTable.")
 
 def checkUserTablePresenceByUsername(userName = None):
     #Error Checking

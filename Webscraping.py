@@ -9,6 +9,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 #Class init
 class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
@@ -23,24 +26,9 @@ class movieStatsClass:
     def returnAsList(self):
         return [self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
 
-def convertToDict(movieList = None, typeSource = None):
-    if typeSource == "webscrape": #bruh
-        n = 0
-    elif typeSource == "database":
-        n = 1
-    elif typeSource == None:
-        raise Exception(f"Error in type of typesource, {typeSource} is invalid.")
-    movieDict = {
-        "movieTitle" : movieList[n],
-        "movieSummary" : movieList[n+1],
-        "movieRating" : movieList[n+2],
-        "movieReleaseDate" : movieList[n+3],
-        "movieLength" : movieList[n+4],
-        "movieDirector" : movieList[n+5],
-        "movieGenres" : movieList[n+6],
-        "moviePosterLink" : movieList[n+7]
-    }
-    return movieDict
+def classify(movieList):
+    movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
+    return movieClass
 #The Moviedb
 global genreDict
 Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"
@@ -91,17 +79,24 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
             directorList[0],
             genreList,
             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
-    movieDict = convertToDict(movieList = movieList, typeSource="webscrape")
-    return movieDict
+    movieClass = classify(movieList)
+    return movieClass
+
 #Odeon
 def returnODEONDates(movieName = None):
+    delay = 3
     firefoxOptions = Options()
     #firefoxOptions.add_argument("--headless")
     driver = webdriver.Firefox()
-    driver.get("https://www.odeon.co.uk")
-    t.sleep(4)
+    browser = driver.get("https://www.odeon.co.uk")
+    try:
+        elem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))) #holy weird line
+    except TimeoutError:
+        raise Exception("uh oh :[")
     driver.find_element(By.ID, "onetrust-accept-btn-handler").click() #click on accept popup
     driver.find_element(By.CLASS_NAME, "banner-icon").click() #click on search box
+    driver.quit()
+
 """
 print("ODEON")
 print("init firefox driver")

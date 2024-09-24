@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/signPageStyle.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('images', filename='icon.png')}}">
-    <link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-    <!-- Navbar Section -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" id="navbar-logo">Movieverse</a>
-            <div class="navbar-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/signPageStyle.css') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png')}}">
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <!-- Navbar Section -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" id="navbar-logo">Movieverse</a>
+                <div class="navbar-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar-menu">
+                    <li class="navbar-item">
+                        <a href="/" class="navbar-links">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/search" class="navbar-links">Search</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/Sign-up" class = "navbar-links">Sign Up</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="Log-in" class = "navbar-links">Log In</a>
+                    </li>
+                </ul>
             </div>
-            <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="/" class="navbar-links">Home</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/search" class="navbar-links">Search</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/Sign-up" class = "navbar-links">Sign Up</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="Log-in" class = "navbar-links">Log In</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!--Everything Else-->
-</body>
+        </nav>
+        <!--Everything Else-->
+        {%if sendType == 1 %}
+        <h1>Log in</h1>
+        {%elif sendType == 2%}
+        <h2>Sign up</h2>
+        {%endif%}
+    </body>
 </html>

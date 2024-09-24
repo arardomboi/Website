@@ -73,7 +73,7 @@ img {
     justify-content: flex-start;
 }
 
-.box {
+.primary-box {
     width: 700px;
     height: 400px;
     background: radial-gradient(black,grey);
@@ -84,13 +84,20 @@ img {
     justify-content: flex-start;
     z-index: 0;
     top: 10%;
-}
-
-.box-primary {
     left: 10%;
 }
 
-.box-secondary {
+.secondary-box {
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(black,grey);
+    color: white;
+    position: absolute;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal !important; /* Same as L68 */
+    justify-content: flex-start;
+    z-index: 0;
+    top: 10%;
     left: 50%;
 }
 

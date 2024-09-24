@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/moviePageStyle.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icon.png')}}">
-    <link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-    <!-- Navbar Section -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" id="navbar-logo">Movieverse</a>
-            <div class="navbar-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/moviePageStyle.css') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/icon.png')}}">
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <!-- Navbar Section -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/" id="navbar-logo">Movieverse</a>
+                <div class="navbar-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar-menu">
+                    <li class="navbar-item">
+                        <a href="/" class="navbar-links">Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/search" class="navbar-links">Search</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="Log-in" class = "navbar-links">Log In</a>
+                    </li>
+                </ul>
             </div>
-            <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="/" class="navbar-links">Home</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/search" class="navbar-links">Search</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="/Sign-up" class = "navbar-links">Sign Up</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="Log-in" class = "navbar-links">Log In</a>
-                </li>
-            </ul>
+        </nav>
+        <!--Everything Else-->
+        <div class="movie-data-primary-box">
+            <img src="{{url_for('static', filename = 'images/popular_movie.png')}}" alt = "Movie Poster" class = "movie-poster">
+            <h1>FIX</h1>
         </div>
-    </nav>
-    <!--Everything Else-->
-    <div class="movie-data-primary-box">
-        <img src="{{movieDict['moviePosterLink']}}" alt = "Movie Poster" class = "movie-poster">
-        <h1>{{movieDict["movieTitle"]}}</h1>
-        <h1>{{movieDict["movieSummary"]}}</h1>
-        <h1>{{movieDict["movieRating"]}}</h1>
-        <h1>{{movieDict["movieReleaseDate"]}}</h1>
-        <h1>{{movieDict["movieLength"]}}</h1>
-        <h1>{{movieDict["movieDirector"]}}</h1>
-        <h1>{{movieDict["movieGenres"]}}</h1>
-
-    </div>
-</body>
+    </body>
 </html>

@@ -46,7 +46,11 @@ def moviePage(movieID):
 
 @app.route("/Sign-up")
 def signPage():
-    return render_template("Registration.html")
+    return render_template("Registration.html", sendType = 1)
+
+@app.route("/Log-in")
+def logPage():
+    return render_template("Registration.html", sendType = 2)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -41,6 +41,7 @@ https://selenium-python.readthedocs.io/getting-started.html#simple-usage Seleniu
 https://www.selenium.dev/documentation/webdriver/elements/locators/ Selenium tutorial
 https://stackoverflow.com/questions/1884818/how-do-i-add-a-foreign-key-to-an-existing-sqlite-table sql foreign key
 https://docs.python.org/3/library/hashlib.html hashing passwords
+https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python selenium wait until
 
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
