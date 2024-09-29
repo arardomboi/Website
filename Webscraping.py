@@ -84,15 +84,16 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
 
 #Odeon
 def returnODEONDates(movieName = None):
-    delay = 3
+    delay = 0.5
     firefoxOptions = Options()
-    #firefoxOptions.add_argument("--headless")
+    #firefoxOptions.add_argument("--headless") #Cant see physical page on pc
     driver = webdriver.Firefox()
     browser = driver.get("https://www.odeon.co.uk")
     try:
         elem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))) #holy weird line
     except TimeoutError:
-        raise Exception("uh oh :[")
+        driver.quit()
+        returnODEONDates(movieName)
     driver.find_element(By.ID, "onetrust-accept-btn-handler").click() #click on accept popup
     driver.find_element(By.CLASS_NAME, "banner-icon").click() #click on search box
     driver.quit()

@@ -10,7 +10,6 @@ cursor = conn.cursor()
 print("Connected successfully.")
 #Moviedb Table
 def classifyMovieList(movieList): #idk
-    print(movieList)
     movieDataClass = wb.movieStatsClass(movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7], movieList[8])
     movieDataClass.genreList = convertListToString(movieDataClass.genreList)
     return movieDataClass
@@ -116,7 +115,6 @@ def resetUserTable():
         createUserTable()
     except:
         createUserTable()
-
     print("UserData table reset successfully.")
 
 def createReviewDataTable():
