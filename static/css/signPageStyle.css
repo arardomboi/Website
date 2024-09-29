@@ -83,10 +83,11 @@ img {
     padding: 10px;
 }
 
-.log-in-box {
+.reg-box {
     flex-direction: column;
     left: 40%;
     top: 20%;
+    border-style: dashed;
     border: 100px black;
     padding: 10px;
     align-items: center;

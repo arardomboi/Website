@@ -28,27 +28,40 @@
                     <li class="navbar-item">
                         <a href="/Sign-up" class = "navbar-links">Sign Up</a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="Log-in" class = "navbar-links">Log In</a>
+                    <li clas="navbar-item">
+                        <a href="Log In" class="navbar-links">Log In</a>
                     </li>
+                    <li class="navbar-item">
+                        <a href="Sign Up" class = "navbar-links">Sign Up</a>
                 </ul>
             </div>
         </nav>
         <!--Everything Else-->
-        {%if sendType == 1 %}
-        <h1>Sign Up</h1>
-        {%elif sendType == 2 %}
-        <div class = "log-in-box ">
+        {%if sendType == 1 %}  <!-- Log In -->
+        <div class = "reg-box">
+            <h1>Log in</h1>
+            <form>
+                <label for = "uname">Username:</label>
+                <input type = "text" id = "uname" name = "uname"><br>
+                <label for = "password">Password:</label>
+                <input type = "text" id = "password" name = "password">
+                <input type = "submit" id = submit name = "submit">
+            </form>
+        </div>
+        {%elif sendType == 2 %}  <!--Sign Up-->
+        <div class = "reg-box">
             <h1>Create Your Account:</h1>
             <form>
                 <label for = "fname">First Name:</label><br>
                 <input type = "text" id = "fname" name = "fname"><br>
                 <label for = "lname">Last Name:</label><br>
                 <input type = "text" id = "lname" name = "lname"><br>
+                <label for = "uname">Username:</label><br>
+                <input type = "text" id = "uname" name = "uname"><br>
                 <label for = "email">Email:</label><br>
                 <input type = "text" id = "email" name = "email"><br>
                 <label for = "password">Password:</label><br>
-                <input type = "text" id = "password" name = "password">
+                <input type = "text" id = "password" name = "password"><br>
                 <input type = "submit" id = submit name = "submit" >
             </form>
         </div>

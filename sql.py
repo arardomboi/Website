@@ -1,5 +1,5 @@
 #Imports
-import sqlite3 as sql #me
+import sqlite3 as sql #not me
 import Webscraping as wb #me
 import hashlib #not me
 #Yea

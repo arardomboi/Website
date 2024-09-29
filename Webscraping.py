@@ -2,7 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import urllib.request
-import time as t
+import time
 #selenium
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys

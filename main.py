@@ -3,19 +3,7 @@ from flask import Flask, render_template #not me
 import sql #me
 #PYTHON
 
-def removeURLPunctuation(movieName):
-    #Define Illegal Chars
-    illegalChar = ["!","£","$","%","^",",",".","+","-",":",";"]
-    specialChar = ["&"]
-    encodedName = ""
-    #Loop through for illegal Chars
-    for letter in movieName:
-        if letter == " ":
-            encodedName += "-"
-        elif not (letter in illegalChar):
-            encodedName += letter
-    encodedName = encodedName.replace("--", "-") #Removes double dashes (double spaces)
-    return encodedName
+
 
 #FLASK
 
@@ -44,12 +32,12 @@ def moviePage(movieID):
 
     return render_template("movie.html", movieDict = movieDict)
 
-@app.route("/Sign-up")
-def signPage():
-    return render_template("Registration.html", sendType = 1)
-
 @app.route("/Log-in")
 def logPage():
+    return render_template("Registration.html", sendType = 1)
+
+@app.route("/Sign-up")
+def signPage():
     return render_template("Registration.html", sendType = 2)
 
 if __name__ == "__main__":
