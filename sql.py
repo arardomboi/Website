@@ -97,6 +97,7 @@ class userClass:
 #functions
 def classifyUserDataSQL(userList):
     classTemp = userClass(userList[0], userList[1], userList[2], userList[3], userList[4], userList[5], userList[6], userList[7], userList[8], userList[9])
+    return classTemp
 
 def createUserTable():
     cursor.execute("""CREATE TABLE userData (
@@ -151,7 +152,7 @@ def addUserDataToUserTable(userClass):
     if not checkUserTablePresenceByUsername(userClass.uName): #if user not found by username
         cursor.execute(""" INSERT INTO userData (firstName, lastName, userName, email, hashedPassword, age, gender)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                   (userClass.fName,userClass.lName,userClass.uName,userClass.email,userClass.hashPass,userClass.age,userClass.gender))#OEWBGIOREBGIREBGREWBGOIUREJBOERIUBG
+                   (userClass.fName,userClass.lName,userClass.uName,userClass.email,userClass.hashPass,userClass.age,userClass.gender))
         conn.commit()
         print("userData added to userTable successfully.") 
     else: #if user found
