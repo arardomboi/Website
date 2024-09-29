@@ -135,16 +135,7 @@ def resetReviewDataTable():
         #delete
         cursor.execute("DROP TABLE reviewData")
         #create
-        cursor.execute("""CREATE TABLE reviewData (
-                   reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-                   movieID INTEGER,
-                   userID INTEGER,
-                   reviewText TEXT,
-                   movieRating INTEGER
-                   reviewDate DATE,
-                   FOREIGN KEY (movieID) REFERENCES movieData(movieID),
-                   FOREIGN KEY (userID) REFERENCES userData(userID));""")
-        print("Review Data table created successfully.")
+        createReviewDataTable()
     except:
         createReviewDataTable()
 
