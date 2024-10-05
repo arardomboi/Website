@@ -73,7 +73,19 @@
                 <input type = "submit" id = submit name = "submit"  value = "Create Account">
             </form>
         </div>
-        {%else %}
+        {%elif sendType == 3 %} <!--Password was invalid-->
+        <div>
+            {%if passwordError[0]%}
+            <h1 color = "red">Password was too short.</h1>
+            {%endif %}
+            {%if passwordError[1] %}
+            <h1 color = "red">Password did not contain a number 0-9</h1>
+            {%endif%} 
+            {%if passwordError[2]%}
+            <h1 color = "red">Password did not contain a special character.</h1>
+            {%endif %}
+        </div>
+        {% else %}
         <h1>Error :[</h1>
         {%endif%}
     </body>
