@@ -1,7 +1,7 @@
 #Imports
 import sqlite3 as sql #not me
 import Webscraping as wb #me
-import hashlib #not me
+import Registration as reg #me
 #Yea
 print("Connecting to database.")
 global cursor
@@ -81,21 +81,10 @@ def returnMovieDataByID(movieID):
 #Sign Up/ Log In
 
 #init class
-class userClass:
-    def __init__(self, firstName, lastName, userName, email, hashedPassword, age, gender):
-        self.fName = firstName
-        self.lName = lastName
-        self.uName = userName
-        self.email = email
-        self.hashPass = hashedPassword
-        self.age = age
-        self.gender = gender
-    def returnAsList(self):
-        return [self.fName,self.lName,self.uName,self.email,self.hashPass,self.age,self.gender]
     
 #functions
 def classifyUserDataSQL(userList):
-    classTemp = userClass(userList[0], userList[1], userList[2], userList[3], userList[4], userList[5], userList[6], userList[7], userList[8], userList[9])
+    classTemp = reg.userClass(userList[0], userList[1], userList[2], userList[3], userList[4], userList[5], userList[6], userList[7], userList[8], userList[9])
     return classTemp
 
 def createUserTable():
@@ -123,7 +112,7 @@ def createReviewDataTable():
                    movieID INTEGER,
                    userID INTEGER,
                    reviewText TEXT,
-                   movieRating INTEGER
+                   movieRating INTEGER,
                    reviewDate DATE,
                    FOREIGN KEY (movieID) REFERENCES movieData(movieID),
                    FOREIGN KEY (userID) REFERENCES userData(userID));""")
@@ -136,6 +125,7 @@ def resetReviewDataTable():
         createReviewDataTable()
     except:
         createReviewDataTable()
+    print("ReviewData table reset.")
 
 def addUserDataToUserTable(userClass):
     if not checkUserTablePresenceByUsername(userClass.uName): #if user not found by username

@@ -51,20 +51,30 @@
         {%elif sendType == 2 %}  <!--Sign Up-->
         <div class = "reg-box">
             <h1>Create Your Account:</h1>
-            <form>
+            <form action = "/Sign-up" method = "POST">
                 <label for = "fname">First Name:</label><br>
                 <input type = "text" id = "fname" name = "fname"><br>
                 <label for = "lname">Last Name:</label><br>
                 <input type = "text" id = "lname" name = "lname"><br>
                 <label for = "uname">Username:</label><br>
                 <input type = "text" id = "uname" name = "uname"><br>
+                <label for = "gender">Gender:</label>
+                <select id = "gender" name = "gender">
+                    <option value = "M">Male</option>
+                    <option value = "F">Female</option>
+                    <option value = "O">Other</option>
+                </select><br>
                 <label for = "email">Email:</label><br>
                 <input type = "text" id = "email" name = "email"><br>
                 <label for = "password">Password:</label><br>
-                <input type = "text" id = "password" name = "password"><br>
-                <input type = "submit" id = submit name = "submit" >
+                <input type = "text" id = "password1" name = "password1"><br>
+                <label for = "password">Reenter password:</label><br>
+                <input type = "text" id = "password2" name = "password2"><br>
+                <input type = "submit" id = submit name = "submit"  value = "Create Account">
             </form>
         </div>
+        {%else %}
+        <h1>Error :[</h1>
         {%endif%}
     </body>
 </html>

@@ -43,5 +43,8 @@ https://stackoverflow.com/questions/1884818/how-do-i-add-a-foreign-key-to-an-exi
 https://docs.python.org/3/library/hashlib.html hashing passwords
 https://stackoverflow.com/questions/26566799/wait-until-page-is-loaded-with-selenium-webdriver-for-python selenium wait until
 https://www.w3schools.com/html/html_forms.asp html forms
+https://www.w3schools.com/html/html_form_elements.asp html forms
+https://www.w3schools.com/python/python_sets.asp sets
+https://www.geeksforgeeks.org/python-test-if-string-contains-element-from-list/ set.intersection
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
