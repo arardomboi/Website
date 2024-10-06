@@ -2,6 +2,7 @@
 import hashlib #not me
 import smtplib #not me
 from email.message import EmailMessage #not me
+import email.mime.text as mime 
 import random as r #not me
 #functions
 class userClass:
@@ -30,34 +31,22 @@ def checkPassword(password): #True = valid, False = invalid
     return [len(password) >= 8, len(passwordSet.intersection(numSet)) != 0, len(passwordSet.intersection(specialSet)) != 0] 
     #[length, has number, has special char], returned as list
 
-#nfwh cjsa udzi tvji - ignore
-def sendEmailCode(email):
-    smtpServer = "smpt.gmail.com"
-    server = smtplib.SMTP(smtpServer, 587)
-    #setup message
+def sendEmailCode(recieveEmail):
+    #init email
     randomCode = r.randint(10000,99999)
-    msg = EmailMessage()
-    msg["From"] = "cineverse.noreply0@gmail.com"
-    msg["To"] = email
-    msg["Subject"] = "Cineverse Account Creation Code"
-    #send message
-    try: #try send 
-        print("Attempting to create email smtp server.")
-        server.starttls()
-        server.login("cineverse.noreply0@gmail.com", "nfwh cjsa udzi tvji")
-        print(f"Server created\nAttempting to send message to email {email} with code {randomCode}.")
-        temp = msg.as_string()
-        server.sendmail("cineverse.noreply0@gmail.com", email, temp)
-        print("Email sent.")
-    except Exception as e: #if error sending mail
-        print(f"Error sending email\n{str(e)}")
-    finally: #after everyting
-        print("Closing email server")
-        server.quit()
+    sendEmail = "cineverse.noreply0@gmail.com"
+    msg = mime.MIMEText(str(randomCode))
+    msg["subject"] = "Verification Code Cineverse"
+    msg["from"] = sendEmail
+    msg["To"] = recieveEmail
+    #create server
+    smtpServer = "smtp.gmail.com"
+    port = 587
+    smtpPassword = "nfwh cjsa udzi tvji"
+    server = smtplib.SMTP(smtpServer, port)
+    server.starttls()
+    server.login(sendEmail, smtpPassword)
+    #send email
+    server.sendmail(sendEmail, recieveEmail, msg.as_string())
+    server.quit()
     return randomCode
-
-code = sendEmailCode("tedhill07@icloud.com")
-if code == int(input("Enter Code: \n")):
-    print("yea")
-else:
-    print(f"nah\ncode = {code}")
