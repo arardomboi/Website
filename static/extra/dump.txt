@@ -46,5 +46,6 @@ https://www.w3schools.com/html/html_forms.asp html forms
 https://www.w3schools.com/html/html_form_elements.asp html forms
 https://www.w3schools.com/python/python_sets.asp sets
 https://www.geeksforgeeks.org/python-test-if-string-contains-element-from-list/ set.intersection
+https://docs.python.org/3/library/email.examples.html email
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre
