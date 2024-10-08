@@ -45,17 +45,12 @@ def signPage():
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
         checkPass = reg.checkPassword(password1)
-        if checkPass[0] and checkPass[1] and checkPass[2]:
-            userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
-            print("HAPPY")
         checkEmail = reg.checkEmail(email)
         if checkPass[0] and checkPass[1] and checkPass[2] and checkEmail:
             userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
             return render_template("Registration.html", sendType = 1)
         else:
             return render_template("Registration.html", sendType = 3, passwordError = checkPass)
-        pass
-    return "<h1>Error :(</h1>"
 
 if __name__ == "__main__":
     app.run(debug=True)
