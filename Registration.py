@@ -4,6 +4,7 @@ import smtplib #not me
 from email.message import EmailMessage #not me
 import email.mime.text as mime 
 import random as r #not me
+import re #not me
 #functions
 class userClass:
     def __init__(self, firstName, lastName, userName, email, password, age, gender):
@@ -31,6 +32,9 @@ def checkPassword(password): #True = valid, False = invalid
     return [len(password) >= 8, len(passwordSet.intersection(numSet)) != 0, len(passwordSet.intersection(specialSet)) != 0] 
     #[length, has number, has special char], returned as list
 
+def checkEmail(email):
+    valid = re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email)
+    return valid
 def sendEmailCode(recieveEmail):
     #init email
     randomCode = r.randint(10000,99999)
