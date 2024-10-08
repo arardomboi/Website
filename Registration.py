@@ -32,7 +32,7 @@ def checkPassword(password): #True = valid, False = invalid
     #[length, has number, has special char], returned as list
 
 def checkEmail(email):
-    valid = re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email)
+    valid = re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email)
     return valid
 def sendEmailCode(recieveEmail):
     #init email
