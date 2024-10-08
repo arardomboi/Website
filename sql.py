@@ -95,7 +95,6 @@ def createUserTable():
                    userName VARCHAR (30),
                    email VARHCAR(100) NOT NULL,
                    hashedPassword TEXT NOT NULL,
-                   age INTEGER,
                    gender CHARACTER);""")
 
 def resetUserTable():

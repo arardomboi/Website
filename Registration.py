@@ -6,17 +6,16 @@ import email.mime.text as mime
 import random as r #not me
 #functions
 class userClass:
-    def __init__(self, firstName, lastName, userName, email, password, age, gender):
+    def __init__(self, firstName, lastName, userName, email, password, gender):
         self.fName = firstName
         self.lName = lastName
         self.uName = userName
         self.gender = gender
         self.email = email
         self.hashPass = hashPassword(password)
-        self.age = age
         self.gender = gender
     def returnAsList(self):
-        return [self.fName,self.lName,self.uName,self.email,self.hashPass,self.age,self.gender]
+        return [self.fName,self.lName,self.uName,self.email,self.hashPass,self.gender]
 
 def hashPassword(password):
     hashedPassword = hashlib.sha256(password.encode("utf-8")).hexdigest()
