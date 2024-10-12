@@ -1,6 +1,6 @@
 #imports
 import sqlite3 as sql #not me
-from initSQL import cursor #me
+from initSQL import conn, cursor #me
 import Registration as reg #me
 #functions
 def classifyUserDataSQL(userList):

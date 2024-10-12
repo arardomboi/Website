@@ -72,3 +72,13 @@ img {
     font-weight: normal !important; /*Doesnt seem to work, relies on * class to not be bold (for some reason) */
     justify-content: flex-start;
 }
+
+.movie-search-box {
+    width: 246px;
+    height: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    left: auto;
+    
+}

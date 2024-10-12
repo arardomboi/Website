@@ -18,11 +18,15 @@ def search():
     print("Rendering Search page")
     return render_template("search.html")
 
-@app.route("/movie/id/<movieID>")
+@app.route("/movie/id/<movieID>") #if movie in db
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
     movieDict = movieSQL.returnMovieDataByID(movieID)
     return render_template("movie.html", movieDict = movieDict)
+
+@app.route("/movie/name/<movieName>") #if not got movie in db
+def movieNameCall(movieName):
+    pass
 
 @app.route("/Log-in", methods = ["GET", "POST"])
 def logPage():
@@ -48,7 +52,7 @@ def signPage():
         checkEmail = reg.checkEmail(email)
         if checkPass[0] and checkPass[1] and checkPass[2] and checkEmail:
             userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
-
+            print(f"User Class instance with username '{userClassInstance.userName}' created.")
             return render_template("Registration.html", sendType = 1)
         else:
             return render_template("Registration.html", sendType = 3, passwordError = checkPass)
