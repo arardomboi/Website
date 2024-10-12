@@ -1,6 +1,6 @@
 #IMPORTS
 from flask import Flask, render_template, request #not me
-import sql #me
+import initSQL, movieSQL, regSQL
 import Registration as reg
 #PYTHON
 pass
@@ -18,10 +18,10 @@ def search():
     print("Rendering Search page")
     return render_template("search.html")
 
-@app.route("/movie/<movieID>")
+@app.route("/movie/id/<movieID>")
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
-    movieDict = sql.returnMovieDataByID(movieID)
+    movieDict = movieSQL.returnMovieDataByID(movieID)
     return render_template("movie.html", movieDict = movieDict)
 
 @app.route("/Log-in", methods = ["GET", "POST"])
@@ -48,6 +48,7 @@ def signPage():
         checkEmail = reg.checkEmail(email)
         if checkPass[0] and checkPass[1] and checkPass[2] and checkEmail:
             userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
+
             return render_template("Registration.html", sendType = 1)
         else:
             return render_template("Registration.html", sendType = 3, passwordError = checkPass)
