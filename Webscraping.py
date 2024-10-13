@@ -47,8 +47,16 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
     response = requests.get(dataURL)
     data = response.json()
-    #NEED TO WORK ON
-    movie = data["results"][0]
+    #page of movie names
+    moviePage = data["results"]
+    #check first page
+    for item in moviePage:
+        if item["title"].lower() == movieName.lower():
+            movie = item
+            temp = True
+    #if no names match
+    if not temp:
+        movie = moviePage[0]
     #List of Directors
     creditURL = f"https://api.themoviedb.org/3/movie/{response.json()["results"][0]["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)
@@ -82,6 +90,13 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     movieClass = classify(movieList)
     return movieClass
 
+def returnMovieDBLikeMovies(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
+    dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
+    response = requests.get(dataURL)
+    data = response.json()
+    #page of movie names
+    moviePage = data["results"]
+    return moviePage
 #Odeon
 def returnODEONDates(movieName = None):
     delay = 0.5
