@@ -31,8 +31,6 @@ def deleteTableMovieData():
         print("Error deleting table 'movieData'.")
 
 #Sign Up/ Log In
-#functions
-
 
 def createUserTable():
     cursor.execute("""CREATE TABLE userData (
@@ -119,8 +117,7 @@ def returnMovieDataByID(movieID):
         var = wb.classify(databaseCheck[1][1:])
         return var
     else:
-        raise Exception("What now :(")
-        dataList = wb.returnMovieDBData()
+        return None
 
 #Reg
 def classifyUserDataSQL(userList):

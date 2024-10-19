@@ -1,7 +1,8 @@
 #IMPORTS
 from flask import Flask, render_template, request #not me
-import SQL, movieSQL, regSQL
-import Registration as reg
+import SQL #me
+import Registration as reg #me
+import Webscraping as wb #me
 #PYTHON
 pass
 #FLASK
@@ -21,7 +22,8 @@ def search():
 @app.route("/movie/id/<movieID>") #if movie in db
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
-    movieDict = movieSQL.returnMovieDataByID(movieID)
+    movieDict = SQL.returnMovieDataByID(movieID)
+
     return render_template("movie.html", movieDict = movieDict)
 
 @app.route("/movie/name/<movieName>") #if not got movie in db
@@ -33,12 +35,13 @@ def logPage():
     if request.method == "GET":
         return render_template("Registration.html", sendType = 1)
     else: #method == POST
-        pass
+        print("SNVORWNVORWEGUBREWOBREWG") #temp
     return "<h1>Error :(</h1>"
 
 @app.route("/Sign-up", methods = ["GET", "POST"])
 def signPage():
     if request.method == "GET": 
+        print("Rendering reg with type = 2.")
         return render_template("Registration.html", sendType = 2)
     else: #method == POST
         fname = request.form.get("fname")
@@ -48,13 +51,16 @@ def signPage():
         email = request.form.get("email")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        checkPass = reg.checkPassword(password1)
+        checkPass = reg.checkPassword(password1) #dict of lengthBool, numBool, specialBool
         checkEmail = reg.checkEmail(email)
-        if checkPass[0] and checkPass[1] and checkPass[2] and checkEmail:
+        if (checkPass["lengthBool"] and checkPass["numBool"] and checkPass["specialBool"]) and (checkEmail) and (password1 == password2): #holy
             userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
-            print(f"User Class instance with username '{userClassInstance.userName}' created.")
+            SQL.addUserDataToUserTable
+            print(f"User Class instance with username '{userClassInstance.userName}' created.") 
+            print("Rendering reg with type = 1.")
             return render_template("Registration.html", sendType = 1)
         else:
+            print("Rendering reg with type = 3.")
             return render_template("Registration.html", sendType = 3, passwordError = checkPass)
 
 if __name__ == "__main__":

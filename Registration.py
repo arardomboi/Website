@@ -23,17 +23,21 @@ def hashPassword(password):
     print(f"Given password of {password} hashed into {hashedPassword} with length of {len(hashedPassword)}")
     return hashedPassword
 
-def checkPassword(password): #True = valid, False = invalid 
-    passwordSet = set(password)
-    specialChar = ["!", ".", "*", "?", "/"]
-    specialSet = set(specialChar)
-    numSet = set(list(str(range(0,10))))
-    return [len(password) >= 8, len(passwordSet.intersection(numSet)) != 0, len(passwordSet.intersection(specialSet)) != 0] 
-    #[length, has number, has special char], returned as list
+def checkPassword(password):
+    passwordSet = set(password) #set version of password string
+    specialSet = set(["!", ".", "*", "?", "/"])
+    numSet = set(list(str(range(0,10)))) #set of numbers 1-10 inclusive
+    passwordDict = {
+        "lengthBool" : len(password) >= 8, #checking if length equal or above 8
+        "numBool" : len(passwordSet.intersection(numSet)) != 0, #checking if has any numbers
+        "specialBool" : len(passwordSet.intersection(specialSet) != 0) #schecking if has any special chars
+        }
+    return passwordDict
 
 def checkEmail(email):
     valid = re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email)
     return valid
+
 def sendEmailCode(recieveEmail):
     #init email
     randomCode = r.randint(10000,99999)
