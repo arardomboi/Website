@@ -1,6 +1,6 @@
 #IMPORTS
 from flask import Flask, render_template, request #not me
-import initSQL, movieSQL, regSQL
+import SQL, movieSQL, regSQL
 import Registration as reg
 #PYTHON
 pass
