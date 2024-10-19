@@ -14,17 +14,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 #Class init
 class movieStatsClass:
-    def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink):
+    def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink, ID = None):
         self.title = Title
         self.summary = Summary
-        self.rating = f"{round(float(Rating)/2)}/10"
+        self.rating = round(float(Rating)/2)
         self.releaseDate = ReleaseDate
         self.length = Length
         self.director = Director
         self.genreList = GenreList
         self.posterLink = posterLink
-    def returnAsList(self):
-        return [self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
+        if ID:
+            self.ID = ID
+    def returnAsList(self): #bit useless
+        return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
 
 def classify(movieList):
     movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
@@ -108,7 +110,7 @@ def returnODEONDates(movieName = None):
         elem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))) #holy weird line
     except TimeoutError:
         driver.quit()
-        returnODEONDates(movieName)
+        returnODEONDates(movieName) #restart?
     driver.find_element(By.ID, "onetrust-accept-btn-handler").click() #click on accept popup
     driver.find_element(By.CLASS_NAME, "banner-icon").click() #click on search box
     driver.quit()

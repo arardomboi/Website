@@ -3,8 +3,7 @@ from flask import Flask, render_template, request #not me
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
-#PYTHON
-pass
+
 #FLASK
 
 app = Flask(__name__, template_folder = "templates")
@@ -22,25 +21,26 @@ def search():
 @app.route("/movie/id/<movieID>") #if movie in db
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
-    movieDict = SQL.returnMovieDataByID(movieID)
+    movieClass = SQL.returnMovieDataByID(movieID)
+    return render_template("movie.html", movieClass = movieClass)
 
-    return render_template("movie.html", movieDict = movieDict)
-
-@app.route("/movie/name/<movieName>") #if not got movie in db
+@app.route("/movie/name/<movieName>") #if movie not in db
 def movieNameCall(movieName):
-    pass
+    print(f"Rendering movie with name {movieName}")
+    movieClass = SQL.returnMovieDataByName(movieName)
+    if movieClass:
+        return "<h1>sigma rizz</h1>"
 
 @app.route("/Log-in", methods = ["GET", "POST"])
 def logPage():
     if request.method == "GET":
-        return render_template("Registration.html", sendType = 1)
+        return render_template("Log In.html")
     else: #method == POST
-        print("SNVORWNVORWEGUBREWOBREWG") #temp
-    return "<h1>Error :(</h1>"
+        return "<h1>Error :(</h1>"
 
 @app.route("/Sign-up", methods = ["GET", "POST"])
 def signPage():
-    if request.method == "GET": 
+    if request.method == "GET":  #Use form
         print("Rendering reg with type = 2.")
         return render_template("Registration.html", sendType = 2)
     else: #method == POST
@@ -51,11 +51,11 @@ def signPage():
         email = request.form.get("email")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        checkPass = reg.checkPassword(password1) #dict of lengthBool, numBool, specialBool
+        checkPass = reg.checkPassword(password1) #dict of keys (lengthBool, numBool, specialBool)
         checkEmail = reg.checkEmail(email)
         if (checkPass["lengthBool"] and checkPass["numBool"] and checkPass["specialBool"]) and (checkEmail) and (password1 == password2): #holy
             userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
-            SQL.addUserDataToUserTable
+            SQL.addUserDataToUserTable(userClassInstance)
             print(f"User Class instance with username '{userClassInstance.userName}' created.") 
             print("Rendering reg with type = 1.")
             return render_template("Registration.html", sendType = 1)

@@ -8,6 +8,7 @@ global cursor
 conn = sql.connect("static/Database.db", check_same_thread=False)
 cursor = conn.cursor()
 print("Connected successfully.")
+
 #Moviedb Table
 def createTableMovieData():
     cursor.execute("""CREATE TABLE movieData (
@@ -95,10 +96,10 @@ def addDataToMovieData(movieList):
     conn.commit()
     print("Movie data added to database.")
 
-def checkMovieDataTable(movieID):
+def checkMovieDataTableByID(movieID):
     #Select statement
     temp = cursor.execute(f"""SELECT * FROM movieData
-                   WHERE movieID = '{movieID}'; 
+                          WHERE movieID = '{movieID}'; 
                    """)
     result = cursor.fetchall()
     #Result is list of tuple(s)
@@ -110,14 +111,28 @@ def checkMovieDataTable(movieID):
         return [False, None]
 
 def returnMovieDataByID(movieID):
-    databaseCheck = checkMovieDataTable(movieID)
+    databaseCheck = checkMovieDataTableByID(movieID)
     #If in database:
     if databaseCheck[0]:
-        print("Returning dictionary of movieData")
-        var = wb.classify(databaseCheck[1][1:])
+        print("Returning class of movieData")
+        var = wb.classify(databaseCheck[1])
         return var
     else:
         return None
+
+def returnMovieDataByName(movieName):
+    print("Returning movie data where")
+    temp = cursor.execute(f"""SELECT * FROM movieData
+                          WHERE movieName = '{movieName}' """)
+    result = cursor.fetchall()
+    if len(result) != 0:
+        print(f"Movie found in database with name '{movieName}'.")
+        return result[0]
+    else:
+        movieData = wb.returnMovieDBData(movieName)
+        movieClass = wb.classify(movieData)
+        addDataToMovieData(movieClass)
+        return movieClass
 
 #Reg
 def classifyUserDataSQL(userList):
@@ -132,7 +147,7 @@ def addUserDataToUserTable(userClass):
         conn.commit()
         print("userData added to userTable successfully.") 
     else: #if user found
-        print(f"Entry for user {userClass.fName} already found in userTable.")
+        print(f"Entry for user {userClass.uName} already found in userTable.")
 
 def checkUserTablePresenceByUsername(userName = None):
     #Error Checking
@@ -161,3 +176,8 @@ def checkUserTablePresenceByID(userID = None):
     #If list is empty
     if len(result) == 0:
         return False
+    else:
+        return True
+
+if __name__ == "__main__":
+    pass

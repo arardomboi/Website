@@ -25,30 +25,16 @@
                     <li class="navbar-item">
                         <a href="/search" class="navbar-links">Search</a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="/Sign-up" class = "navbar-links">Sign Up</a>
-                    </li>
                     <li clas="navbar-item">
-                        <a href="Log In" class="navbar-links">Log In</a>
+                        <a href="Log-in" class="navbar-links">Log In</a>
                     </li>
                     <li class="navbar-item">
-                        <a href="Sign Up" class = "navbar-links">Sign Up</a>
+                        <a href="Sign-up" class = "navbar-links">Sign Up</a>
+                    </li>
                 </ul>
             </div>
         </nav>
         <!--Everything Else-->
-        {%if sendType == 1 %}  <!-- Log In -->
-        <div class = "reg-box">
-            <h1>Log in</h1>
-            <form>
-                <label for = "uname">Username:</label>
-                <input type = "text" id = "uname" name = "uname"><br>
-                <label for = "password">Password:</label>
-                <input type = "text" id = "password" name = "password">
-                <input type = "submit" id = submit name = "submit">
-            </form>
-        </div>
-        {%elif sendType == 2 %}  <!--Sign Up-->
         <div class = "reg-box">
             <h1>Create Your Account:</h1>
             <form action = "/Sign-up" method = "POST">
@@ -73,20 +59,5 @@
                 <input type = "submit" id = submit name = "submit"  value = "Create Account">
             </form>
         </div>
-        {%elif sendType == 3 %} <!--Password was invalid-->
-        <div>
-            {%if not passwordError[0]%}
-            <h1 color = "red">Password was too short.</h1>
-            {%endif %}
-            {%if not passwordError[1] %}
-            <h1 color = "red">Password did not contain a number 0-9</h1>
-            {%endif%} 
-            {%if not passwordError[2]%}
-            <h1 color = "red">Password did not contain a special character.</h1>
-            {%endif %}
-        </div>
-        {% else %}
-        <h1>Error :[</h1>
-        {%endif%}
     </body>
 </html>
