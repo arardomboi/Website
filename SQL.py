@@ -140,7 +140,7 @@ def classifyUserDataSQL(userList):
     return classTemp
 
 def addUserDataToUserTable(userClass):
-    if not checkUserTablePresenceByUsername(userClass.uName): #if user not found by username
+    if not checkUserTablePresence(userClass.uName, type = "user"): #if user not found by username
         cursor.execute(""" INSERT INTO userData (firstName, lastName, userName, email, hashedPassword, age, gender)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
                    (userClass.fName,userClass.lName,userClass.uName,userClass.email,userClass.hashPass,userClass.age,userClass.gender))
@@ -149,35 +149,26 @@ def addUserDataToUserTable(userClass):
     else: #if user found
         print(f"Entry for user {userClass.uName} already found in userTable.")
 
-def checkUserTablePresenceByUsername(userName = None):
-    #Error Checking
-    if not(userName):
-        print("Error with username.")
+def checkUserTablePresence(searchVal = None, type = None):
+    #assigning searchType dependant on given arguement
+    if type == "user":
+        print("Searhing userTable with type of 'user'.", end = "")
+        searchType = "username"
+    elif type == "id":
+        print("Searching userTable with type of 'id'.", end  = "")
+        searchType = "userID"
+        print(f" With given value of {searchVal}")
+    else: #type not equal to either user or id
         return False
     #select where usernames match
     temp = cursor.execute(f"""SELECT userName FROM userData
-                   WHERE userName = '{userName}'; 
+                   WHERE {searchType} = '{searchVal}'; 
                    """)
-    result = cursor.fetchall()
+    result = cursor.fetchall() #tuple of arrays ([],[],[]...)
     #If list is empty
     if len(result) == 0:
         return False
     return True
-
-def checkUserTablePresenceByID(userID = None):
-    #Error Checking
-    if not(userID):
-        print("Error with userID")
-        return False
-    #Select statement
-    temp = cursor.execute(f"""SELECT * FROM userData
-                          WHERE userID = {userID}""")
-    result = cursor.fetchall()
-    #If list is empty
-    if len(result) == 0:
-        return False
-    else:
-        return True
 
 if __name__ == "__main__":
     pass
