@@ -49,5 +49,6 @@ https://www.geeksforgeeks.org/python-test-if-string-contains-element-from-list/ 
 https://docs.python.org/3/library/email.examples.html email
 https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/ RegEx 
 https://www.w3schools.com/python/python_regex.asp RegEx
+https://www.geeksforgeeks.org/redirecting-to-url-in-flask/ redirect inside of python Flask
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre

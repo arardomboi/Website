@@ -1,9 +1,9 @@
 #IMPORTS
-from flask import Flask, render_template, request #not me
+from flask import Flask, render_template, request, redirect, url_for #not me
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
-
+import returnFromForms as rf #me
 #FLASK
 
 app = Flask(__name__, template_folder = "templates")
@@ -27,16 +27,15 @@ def moviePage(movieID):
 @app.route("/movie/name/<movieName>") #if movie not in db
 def movieNameCall(movieName):
     print(f"Rendering movie with name {movieName}")
-    movieClass = SQL.returnMovieDataByName(movieName)
-    if movieClass:
-        return "<h1>sigma rizz</h1>"
+    movieClass = SQL.returnMovieDataByName(movieName) #collect data as a class
+    return redirect(url_for("moviePage")) #redirecting to actual page
 
 @app.route("/Log-in", methods = ["GET", "POST"])
 def logPage():
     if request.method == "GET":
         return render_template("Log In.html")
     else: #method == POST
-        return "<h1>Error :(</h1>"
+        return "<h1>Error :(</h1>" #NOT MADE YET
 
 @app.route("/Sign-up", methods = ["GET", "POST"])
 def signPage():
@@ -44,6 +43,8 @@ def signPage():
         print("Rendering reg with type = 2.")
         return render_template("Registration.html", sendType = 2)
     else: #method == POST
+        userClassInstance = rf.returnSignFormData()
+        return None
         fname = request.form.get("fname")
         lname = request.form.get("lname")
         uname = request.form.get("uname")
