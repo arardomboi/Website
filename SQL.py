@@ -73,11 +73,6 @@ def resetReviewDataTable():
     print("ReviewData table reset.")
 
 #Movie DB
-def classifyMovieList(movieList): #idk
-    movieDataClass = wb.movieStatsClass(movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7], movieList[8])
-    movieDataClass.genreList = convertListToString(movieDataClass.genreList)
-    return movieDataClass
-
 def convertListToString(dataList):
     var = dataList[0]
     for item in dataList:
@@ -88,8 +83,7 @@ def convertStringToList(dataString):
     var = dataString.split(", ")
     return var
 
-def addDataToMovieData(movieList):
-    movieDataClass = classifyMovieList(movieList)
+def addDataToMovieData(movieDataClass):
     cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
                    (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreList, movieDataClass.posterLink))
@@ -119,9 +113,8 @@ def returnMovieDataByID(movieID):
         return var
     else:
         return None
-
 def returnMovieDataByName(movieName):
-    print("Returning movie data where")
+    print(f"Attempting to return movie data where name = {movieName}")
     temp = cursor.execute(f"""SELECT * FROM movieData
                           WHERE movieName = '{movieName}' """)
     result = cursor.fetchall()
@@ -130,9 +123,8 @@ def returnMovieDataByName(movieName):
         return result[0]
     else:
         movieData = wb.returnMovieDBData(movieName)
-        movieClass = wb.classify(movieData)
-        addDataToMovieData(movieClass)
-        return movieClass
+        addDataToMovieData(movieData)
+        return movieData
 
 def returnAllMovies(): #lol
     temp = cursor.execute("""SELECT * FROM movieData""")

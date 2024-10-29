@@ -29,6 +29,7 @@ class movieStatsClass:
         return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
 
 def classify(movieList):
+    print(movieList)
     movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
     return movieClass
 #The Moviedb
@@ -59,6 +60,7 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     #if no names match
     if not temp:
         movie = moviePage[0]
+    print(movie)
     #List of Directors
     """creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)

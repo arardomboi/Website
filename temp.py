@@ -8,4 +8,9 @@ def returnRandomMovie():
     else:
         print("not has")
 
-var = returnRandomMovie()
+#var = returnRandomMovie()
+
+movies = ["Titanic", "Inception", "Minions", "Blade Runner", "Blade Runner 2049"]
+a = []
+for m in movies:
+    a.append(SQL.returnMovieDataByName(m))
