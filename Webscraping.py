@@ -60,13 +60,13 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     if not temp:
         movie = moviePage[0]
     #List of Directors
-    creditURL = f"https://api.themoviedb.org/3/movie/{response.json()["results"][0]["id"]}/credits?api_key={Moviedb_APIKEY}"
+    """creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)
     creditData = creditResponse.json()
-    directorList = []
     for worker in creditData["crew"]:
         if worker["job"] == "Director":
-            directorList.append(worker["name"])
+            director = worker["name"]""" #NEED TO FIX
+    director = None
     #Getting Genres
     genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}&lanuage=en-US"
     genreResponse = requests.get(genreURL)
@@ -80,13 +80,13 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
         movieRuntime = 138
     else:
         movieRuntime = movie.get("runtime")
-    #holy large return statement
+    #holy large shaboingery
     movieList =  [movie["title"].title(),
             movie["overview"],
             movie["vote_average"],
             movie["release_date"],
             movieRuntime,
-            directorList[0],
+            director,
             genreList,
             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
     movieClass = classify(movieList)

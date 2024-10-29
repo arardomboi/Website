@@ -134,6 +134,11 @@ def returnMovieDataByName(movieName):
         addDataToMovieData(movieClass)
         return movieClass
 
+def returnAllMovies(): #lol
+    temp = cursor.execute("""SELECT * FROM movieData""")
+    result = cursor.fetchall()
+    return result
+
 #Reg
 def classifyUserDataSQL(userList):
     classTemp = reg.userClass(userList[0], userList[1], userList[2], userList[3], userList[4], userList[5], userList[6], userList[7], userList[8], userList[9])
