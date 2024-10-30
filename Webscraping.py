@@ -26,7 +26,12 @@ class movieStatsClass:
         if ID:
             self.ID = ID
     def returnAsList(self): #bit useless
-        return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink] 
+        return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink]
+    def returnGenreAsString(self):
+        genreString = self.genreList[0]
+        for genre in self.genreList[1:]:
+            genreString += (f" , {genre}")
+        return genreString
 
 def classify(movieList):
     print(movieList)
@@ -78,8 +83,8 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
         genreList.append(genre["name"])
     #checking if runtime returns 'None' as it keeps returning none
     if not movie.get("runtime"):
-        print(f"Error returning '{movieName.title()}' runtime, defaulting to 138.")
-        movieRuntime = 138
+        print(f"Error returning '{movieName.title()}' runtime")
+        movieRuntime = -1
     else:
         movieRuntime = movie.get("runtime")
     #holy large shaboingery

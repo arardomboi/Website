@@ -86,7 +86,7 @@ def convertStringToList(dataString):
 def addDataToMovieData(movieDataClass):
     cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                   (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreList, movieDataClass.posterLink))
+                   (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.returnGenreAsString(), movieDataClass.posterLink))
     conn.commit()
     print("Movie data added to database.")
 
