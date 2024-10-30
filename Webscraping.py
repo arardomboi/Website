@@ -64,15 +64,17 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
             temp = True
     #if no names match
     if not temp:
+        print(f"No data found for movie name {movieName}, defaulting to first item.")
         movie = moviePage[0]
-    print(movie)
+    else:
+        print(f"Exact movie with name {movieName} found.")
     #List of Directors
-    """creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
+    creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)
     creditData = creditResponse.json()
     for worker in creditData["crew"]:
         if worker["job"] == "Director":
-            director = worker["name"]""" #NEED TO FIX
+            director = worker["name"] #NEED TO FIX
     director = None
     #Getting Genres
     genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}&lanuage=en-US"
