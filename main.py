@@ -1,6 +1,7 @@
 #IMPORTS
 from flask import Flask, render_template, request, redirect, url_for #not me
 import random as ran #not me
+import requests as rq
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
@@ -11,6 +12,11 @@ import returnFromForms as rf #me
 #FLASK
 
 app = Flask(__name__, template_folder = "templates")
+@app.route("/rizz")
+def temp():
+    pageData = request.form
+    print(pageData)
+    return render_template("temp.html")
 
 @app.route("/")
 def home():
@@ -45,10 +51,11 @@ def logPage():
 def signPage():
     if request.method == "GET":  #Use form
         print("Rendering reg with type = 2.")
-        return render_template("Registration.html", sendType = 2)
+        return render_template("Sign Up.html", sendType = 2)
     else: #method == POST
-        userClassInstance = rf.returnSignFormData()
-        return None
+        pageData = request.form
+        print(pageData)
+        return render_template("temp.html")
         fname = request.form.get("fname")
         lname = request.form.get("lname")
         uname = request.form.get("uname")

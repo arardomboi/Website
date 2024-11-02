@@ -1,15 +1,18 @@
 #imports
 import urllib.request, json #not me
-from flask import request
+from flask import request #not me
+from werkzeug.datastructures import ImmutableMultiDict  #not me
 #functions
-def returnSignFormData(page = None):
-    with urllib.request.urlopen("/Sign-up") as url:
-        data = json.load(url)
-        fname = request.form.get("fname")
-        lname = request.form.get("lname")
-        uname = request.form.get("uname")
-        gender = request.form.get("gender")
-        email = request.form.get("email")
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
-        print(":)")
+def returnSignFormData(pageData = None):
+    pass
+
+ImmutableMultiDict([('fname', 'ted'), 
+                    ('lname', 'hill'), 
+                    ('uname', 'doggo'), 
+                    ('gender', 'M'), 
+                    ('email', 'tedhill07@icloud.com'), 
+                    ('password1', 'EdwardHill12'), 
+                    ('password2', 'EdwardHill12'), 
+                    ('submit', 'Create Account')])
+
+print(ImmutableMultiDict.getlist("fname"))
