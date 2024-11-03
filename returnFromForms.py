@@ -7,9 +7,15 @@ import Registration as reg
 
 def returnSignFormData(pageData = None): #returns class
     dic = {key : pageData.getlist(key)[0] for key in pageData} #painful to read
-    if dic["password1"] == dic["password2"]:
-        passwordCheck = reg.checkPassword(dic)
-        userClassInstance = reg.userClass()
+    if dic["password1"] == dic["password2"]: #matching pw
+        passwordCheck = reg.checkPassword(dic["password1"])
+        if passwordCheck["lengthBool"] and passwordCheck["numBool"] and passwordCheck["specialBool"]: #if meets all conditions
+            userClassInstance = reg.userClass(firstName=dic["fname"],lastName=dic["lname"],userName=dic["uname"],email=dic["email"],password=dic["password1"],gender=dic["gender"])
+            return userClassInstance
+        else:
+            return [-2, "password does not meet all conditions"] 
+    else:
+        return [-1, "passwords do not match"]
 
 trial = ImmutableMultiDict([('fname', 'ted'), 
                     ('lname', 'hill'), 

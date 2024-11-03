@@ -11,7 +11,6 @@ class userClass:
         self.fName = firstName
         self.lName = lastName
         self.uName = userName
-        self.gender = gender
         self.email = email
         self.hashPass = hashPassword(password)
         self.gender = gender
