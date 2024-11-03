@@ -50,30 +50,11 @@ def logPage():
 @app.route("/Sign-up", methods = ["GET", "POST"])
 def signPage():
     if request.method == "GET":  #Use form
-        print("Rendering reg with type = 2.")
-        return render_template("Sign Up.html", sendType = 2)
+        print("Rendering Signup initial")
+        return render_template("Sign Up.html", type = 1)
     else: #method == POST
-        pageData = request.form
-        print(pageData)
+        
         return render_template("temp.html")
-        fname = request.form.get("fname")
-        lname = request.form.get("lname")
-        uname = request.form.get("uname")
-        gender = request.form.get("gender")
-        email = request.form.get("email")
-        password1 = request.form.get("password1")
-        password2 = request.form.get("password2")
-        checkPass = reg.checkPassword(password1) #dict of keys (lengthBool, numBool, specialBool)
-        checkEmail = reg.checkEmail(email)
-        if (checkPass["lengthBool"] and checkPass["numBool"] and checkPass["specialBool"]) and (checkEmail) and (password1 == password2): #holy
-            userClassInstance = reg.userClass(firstName = fname, lastName = lname, userName = uname, gender = gender, email = email, password = password1)
-            SQL.addUserDataToUserTable(userClassInstance)
-            print(f"User Class instance with username '{userClassInstance.userName}' created.") 
-            print("Rendering reg with type = 1.")
-            return render_template("Registration.html", sendType = 1)
-        else:
-            print("Rendering reg with type = 3.")
-            return render_template("Registration.html", sendType = 3, passwordError = checkPass)
 
 if __name__ == "__main__":
     app.run(debug=True)
