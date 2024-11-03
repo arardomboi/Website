@@ -5,7 +5,6 @@ import requests as rq
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
-import returnFromForms as rf #me
 #PYTHON
 
 
@@ -53,8 +52,14 @@ def signPage():
         print("Rendering Signup initial")
         return render_template("Sign Up.html", type = 1)
     else: #method == POST
-        
-        return render_template("temp.html")
+        formData = request.form
+        returnedFormData = reg.returnLogInFormData(formData)
+        if returnedFormData[0]:
+            userClassInstance = returnedFormData[1]
+            SQL.addUserDataToUserTable(userClassInstance)
+            return render_template("temp.html")
+        else:
+            pass
 
 if __name__ == "__main__":
     app.run(debug=True)

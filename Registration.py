@@ -58,14 +58,14 @@ def sendEmailCode(recieveEmail):
     server.quit()
     return randomCode
 
-def returnSignFormData(pageData = None): #returns class
+def returnLogInFormData(pageData = None): #returns class
     dic = {key : pageData.getlist(key)[0] for key in pageData} #painful to read
     if dic["password1"] == dic["password2"]: #matching pw
-        passwordCheck = reg.checkPassword(dic["password1"])
+        passwordCheck = checkPassword(dic["password1"])
         if passwordCheck["lengthBool"] and passwordCheck["numBool"] and passwordCheck["specialBool"]: #if meets all conditions
             userClassInstance = reg.userClass(firstName=dic["fname"],lastName=dic["lname"],userName=dic["uname"],email=dic["email"],password=dic["password1"],gender=dic["gender"]) #large ahh statement
-            return userClassInstance
+            return [True, userClassInstance]
         else:
-            return [-2, "password does not meet all conditions"] 
+            return [False, "password does not meet all conditions"] 
     else:
-        return [-1, "passwords do not match"]
+        return [False, "passwords do not match"]
