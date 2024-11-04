@@ -17,6 +17,22 @@ for m in movies:
     a.append(SQL.returnMovieDataByName(m))
 """
 
-movieName = "Titanic"
+"""movieName = "Titanic"
 movieData = wb.returnMovieDBData(movieName)
 print(movieData)
+"""
+
+def temp(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
+    ###
+    genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}"
+    response = requests.get(genreURL)
+    genreData = response.json()
+    genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
+    ###
+    movieURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
+    response = requests.get(movieURL)
+    data = response.json()
+    pageData = data["results"]
+    print(pageData[0])
+
+temp("Titanic")

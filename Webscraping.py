@@ -1,9 +1,10 @@
 #imports
-import requests
-from bs4 import BeautifulSoup
-import urllib.request
-import time
-#selenium
+import requests #not me
+from bs4 import BeautifulSoup #not me
+import urllib.request #not me
+import time #not me
+import SQL #me
+#selenium - not me
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -15,6 +16,7 @@ from selenium.common.exceptions import TimeoutException
 #Class init
 class movieStatsClass:
     def __init__(self, Title, Summary, Rating, ReleaseDate, Length,  Director, GenreList, posterLink, ID = None):
+        self.ID = ID
         self.title = Title
         self.summary = Summary
         self.rating = round(float(Rating)/2)
@@ -23,17 +25,17 @@ class movieStatsClass:
         self.director = Director
         self.genreList = GenreList
         self.posterLink = posterLink
-        if ID:
-            self.ID = ID
+    
     def returnAsList(self): #bit useless
         return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink]
+    
     def returnGenreAsString(self):
         genreString = self.genreList[0]
         for genre in self.genreList[1:]:
             genreString += (f" , {genre}")
         return genreString
 
-def classify(movieList):
+def classifyFromAPI(movieList):
     print(movieList)
     movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
     return movieClass
@@ -74,15 +76,14 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     creditData = creditResponse.json()
     for worker in creditData["crew"]:
         if worker["job"] == "Director":
-            director = worker["name"] #NEED TO FIX
-    director = None
+            director = worker["name"]
     #Getting Genres
-    genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}&lanuage=en-US"
-    genreResponse = requests.get(genreURL)
-    genreIDList = genreResponse.json().get("genres", [])
+    genreIDs = movie["genre_ids"]
     genreList = []
-    for genre in genreIDList:
-        genreList.append(genre["name"])
+    for ID in genreIDs:
+        genreList.append(genreDict["ID"])
+    
+    genreString = SQL.convertListToString
     #checking if runtime returns 'None' as it keeps returning none
     if not movie.get("runtime"):
         print(f"Error returning '{movieName.title()}' runtime")
@@ -96,9 +97,9 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
             movie["release_date"],
             movieRuntime,
             director,
-            genreList,
+            genreString,
             f"https://image.tmdb.org/t/p/original/{movie["poster_path"]}"]
-    movieClass = classify(movieList)
+    movieClass = classifyFromAPI(movieList)
     return movieClass
 
 def returnMovieDBLikeMovies(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):

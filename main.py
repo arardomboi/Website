@@ -27,17 +27,17 @@ def search():
     print("Rendering Search page")
     return render_template("search.html")
 
-@app.route("/movie/id/<movieID>") #if movie in db
+@app.route("/movie/id/<movieID>") #if movie in db from search
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
     movieClass = SQL.returnMovieDataByID(movieID)
     return render_template("movie.html", movieClass = movieClass)
 
-@app.route("/movie/name/<movieName>") #if movie not in db
+@app.route("/movie/name/<movieName>") #if movie not in db from search
 def movieNameCall(movieName):
     print(f"Rendering movie with name {movieName}")
     movieClass = SQL.returnMovieDataByName(movieName) #collect data as a class
-    return redirect(url_for("moviePage")) #redirecting to actual page
+    return redirect(url_for(f"/movie/id/{movieClass.ID}")) #redirecting to actual page
 
 @app.route("/Log-in", methods = ["GET", "POST"])
 def logPage():

@@ -35,7 +35,7 @@ def checkPassword(password):
     return passwordDict
 
 def checkEmail(email):
-    valid = re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email) #regex
+    valid = re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email) #awful regex
     return valid
 
 def sendEmailCode(recieveEmail):

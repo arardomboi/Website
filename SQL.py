@@ -2,6 +2,7 @@
 import sqlite3 as sql #not me
 import Webscraping as wb #me
 import Registration as reg #me
+import random as ran #not me
 #Yea
 print("Connecting to database.")
 global cursor
@@ -73,6 +74,9 @@ def resetReviewDataTable():
     print("ReviewData table reset.")
 
 #Movie DB
+def classifyMovieDataSQL(movieList):
+    movieClass = wb.movieStatsClass(movieList[0])
+    return movieClass
 def convertListToString(dataList):
     var = dataList[0]
     for item in dataList:
@@ -122,14 +126,18 @@ def returnMovieDataByName(movieName):
         print(f"Movie found in database with name '{movieName}'.")
         return result[0]
     else:
+        print(f"Movie not found in database with name '{movieName}")
         movieData = wb.returnMovieDBData(movieName)
         addDataToMovieData(movieData)
-        return movieData
+        returnMovieDataByName(movieName)
 
-def returnAllMovies(): #lol
-    temp = cursor.execute("""SELECT * FROM movieData""")
-    result = cursor.fetchall()
-    return result
+def returnRandomMovie(): #lol
+    temp = cursor.execute("""SELECT * FROM movieData
+                          ORDER BY RANDOM()
+                          LIMIT 1""")
+    result = cursor.fetchall()[0]
+    movieClass = classifyMovieDataSQL(result)
+    return movieClass
 
 #Reg
 def classifyUserDataSQL(userList):
@@ -168,4 +176,5 @@ def checkUserTablePresence(searchVal = None, type = None):
     return True
 
 if __name__ == "__main__":
-    pass
+    var = returnRandomMovie()
+    print(var)
