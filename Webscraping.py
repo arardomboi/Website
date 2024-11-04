@@ -36,9 +36,9 @@ class movieStatsClass:
         return genreString
 
 def classifyFromAPI(movieList):
-    print(movieList)
     movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
     return movieClass
+
 #The Moviedb
 global genreDict
 Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"
@@ -69,21 +69,21 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
         print(f"No data found for movie name {movieName}, defaulting to first item.")
         movie = moviePage[0]
     else:
-        print(f"Exact movie with name {movieName} found.")
-    #List of Directors
+        print(f"Exact movie with name '{movieName.title()}' found.")
+    #Get Director
     creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)
     creditData = creditResponse.json()
+    director = "Unknown"
     for worker in creditData["crew"]:
         if worker["job"] == "Director":
             director = worker["name"]
     #Getting Genres
     genreIDs = movie["genre_ids"]
     genreList = []
-    for ID in genreIDs:
-        genreList.append(genreDict["ID"])
-    
-    genreString = SQL.convertListToString
+    for genreID in genreIDs:
+        genreList.append(genreDict[genreID])
+    genreString = SQL.convertListToString(genreList)
     #checking if runtime returns 'None' as it keeps returning none
     if not movie.get("runtime"):
         print(f"Error returning '{movieName.title()}' runtime")
