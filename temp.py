@@ -22,7 +22,7 @@ movieData = wb.returnMovieDBData(movieName)
 print(movieData)
 """
 
-def temp(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
+def temp(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"): #remade for bug fixing
     ###
     genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}"
     response = requests.get(genreURL)
@@ -39,8 +39,8 @@ def temp(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
         genreList.append(genreDict[genreID])
     print(genreList)
 
-#temp("Titanic")
+"""temp("Titanic")
 
 var = wb.returnMovieDBData("Inception")
 
-print(var)
+print(var)"""

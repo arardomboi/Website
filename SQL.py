@@ -117,6 +117,7 @@ def returnMovieDataByID(movieID):
         return var
     else:
         return None
+    
 def returnMovieDataByName(movieName):
     print(f"Attempting to return movie data where name = {movieName}")
     temp = cursor.execute(f"""SELECT * FROM movieData
@@ -126,10 +127,10 @@ def returnMovieDataByName(movieName):
         print(f"Movie found in database with name '{movieName}'.")
         return result[0]
     else:
-        print(f"Movie not found in database with name '{movieName}")
+        print(f"Movie not found in database with name '{movieName}.")
         movieData = wb.returnMovieDBData(movieName)
         addDataToMovieData(movieData)
-        returnMovieDataByName(movieName)
+        returnMovieDataByName(movieName) #want movieID for url
 
 def returnRandomMovie(): #lol
     temp = cursor.execute("""SELECT * FROM movieData
