@@ -7,7 +7,6 @@ import Registration as reg #me
 import Webscraping as wb #me
 #PYTHON
 
-
 #FLASK
 
 app = Flask(__name__, template_folder = "templates")
@@ -20,18 +19,20 @@ def temp():
 @app.route("/")
 def home():
     print("Rendering home page.")
-    return render_template("home.html")
+    popularMovie = SQL.returnPopularMovie()
+    randomMovie = SQL.returnRandomMovie()
+    return render_template("Home.html", popularMovie = popularMovie, randomMovie = randomMovie)
 
 @app.route("/search")
 def search():
     print("Rendering Search page")
-    return render_template("search.html")
+    return render_template("Search.html")
 
 @app.route("/movie/id/<movieID>") #if movie in db from search
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
     movieClass = SQL.returnMovieDataByID(movieID)
-    return render_template("movie.html", movieClass = movieClass)
+    return render_template("Movie.html", movieClass = movieClass)
 
 @app.route("/movie/name/<movieName>") #if movie not in db from search
 def movieNameCall(movieName):

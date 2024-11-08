@@ -19,7 +19,7 @@ class movieStatsClass:
         self.ID = ID
         self.title = Title
         self.summary = Summary
-        self.rating = round(float(Rating)/2)
+        self.rating = round(float(Rating))
         self.releaseDate = ReleaseDate
         self.length = Length
         self.director = Director
@@ -32,7 +32,7 @@ class movieStatsClass:
     def returnGenreAsString(self):
         genreString = self.genreList[0]
         for genre in self.genreList[1:]:
-            genreString += (f" , {genre}")
+            genreString += (f", {genre}")
         return genreString
 
 def classifyFromAPI(movieList):
@@ -52,7 +52,7 @@ genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
 def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
     #Error Check
     if movieName == None:
-        return ["Movie name missing/invalid"]
+        raise Exception(f"Movie name of {movieName} missing.")
     #Getting General Data
     dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
     response = requests.get(dataURL)
@@ -60,6 +60,7 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     #page of movie names
     moviePage = data["results"]
     #check first page
+    temp = False
     for item in moviePage:
         if item["title"].lower() == movieName.lower():
             movie = item
@@ -70,6 +71,7 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
         movie = moviePage[0]
     else:
         print(f"Exact movie with name '{movieName.title()}' found.")
+    print(movie)
     #Get Director
     creditURL = f"https://api.themoviedb.org/3/movie/{movie["id"]}/credits?api_key={Moviedb_APIKEY}"
     creditResponse = requests.get(creditURL)
@@ -79,10 +81,7 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
         if worker["job"] == "Director":
             director = worker["name"]
     #Getting Genres
-    genreIDs = movie["genre_ids"]
-    genreList = []
-    for genreID in genreIDs:
-        genreList.append(genreDict[genreID])
+    genreList = returnGenreList(movieName)
     genreString = SQL.convertListToString(genreList)
     #checking if runtime returns 'None' as it keeps returning none
     if not movie.get("runtime"):
@@ -102,6 +101,17 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     movieClass = classifyFromAPI(movieList)
     return movieClass
 
+def returnGenreList(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"): #remade for bug fixing
+    movieURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
+    response = requests.get(movieURL)
+    data = response.json()
+    pageData = data["results"][0]
+    genreIDList = pageData["genre_ids"]
+    genreList = []
+    for genreID in genreIDList:
+        genreList.append(genreDict[genreID])
+    return genreList
+
 def returnMovieDBLikeMovies(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"):
     dataURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
     response = requests.get(dataURL)
@@ -109,6 +119,7 @@ def returnMovieDBLikeMovies(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b
     #page of movie names
     moviePage = data["results"]
     return moviePage
+
 #Odeon
 def returnODEONDates(movieName = None):
     delay = 0.5

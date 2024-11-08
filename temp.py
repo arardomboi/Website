@@ -22,25 +22,7 @@ movieData = wb.returnMovieDBData(movieName)
 print(movieData)
 """
 
-def temp(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"): #remade for bug fixing
-    ###
-    genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}"
-    response = requests.get(genreURL)
-    genreData = response.json()
-    genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
-    ###
-    movieURL = f"https://api.themoviedb.org/3/search/movie?api_key={Moviedb_APIKEY}&query={movieName}&append_to_response=runtime"
-    response = requests.get(movieURL)
-    data = response.json()
-    pageData = data["results"][0]
-    genreIDList = pageData["genre_ids"]
-    genreList = []
-    for genreID in genreIDList:
-        genreList.append(genreDict[genreID])
-    print(genreList)
-
-"""temp("Titanic")
-
-var = wb.returnMovieDBData("Inception")
-
-print(var)"""
+movies = ["Titanic", "Inception", "Blade Runner", "Blade Runner 2049", "Minions", "Home Alone", "Home Alone 2"]
+for m in movies:
+    SQL.returnMovieDataByName(m)
+    pass

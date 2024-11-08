@@ -34,7 +34,7 @@ def deleteTableMovieData():
 
 #Sign Up/ Log In
 
-def createUserTable():
+def createTableUserData():
     cursor.execute("""CREATE TABLE userData (
                    userID INTEGER PRIMARY KEY AUTOINCREMENT,
                    firstName VARCHAR(50),
@@ -47,12 +47,12 @@ def createUserTable():
 def resetUserTable():
     try:
         cursor.execute("""DROP TABLE userData;""")
-        createUserTable()
+        createTableUserData()
     except:
-        createUserTable()
+        createTableUserData()
     print("UserData table reset successfully.")
 
-def createReviewDataTable():
+def createTableReviewData():
     cursor.execute("""CREATE TABLE reviewData (
                    reviewID INTEGER PRIMARY KEY AUTOINCREMENT,
                    movieID INTEGER,
@@ -63,21 +63,23 @@ def createReviewDataTable():
                    FOREIGN KEY (movieID) REFERENCES movieData(movieID),
                    FOREIGN KEY (userID) REFERENCES userData(userID));""")
 
-def resetReviewDataTable():
+def resetTableReviewData():
     try:
         #delete
         cursor.execute("DROP TABLE reviewData")
         #create
-        createReviewDataTable()
+        createTableReviewData()
     except:
-        createReviewDataTable()
+        createTableReviewData()
     print("ReviewData table reset.")
 
 #Movie DB
 def classifyMovieDataSQL(movieList):
-    movieClass = wb.movieStatsClass(movieList[0])
+    movieClass = wb.movieStatsClass(movieList)
     return movieClass
+
 def convertListToString(dataList):
+    print(dataList)
     var = dataList[0]
     for item in dataList:
         var += f", {str(item)}"
@@ -121,16 +123,27 @@ def returnMovieDataByID(movieID):
 def returnMovieDataByName(movieName):
     print(f"Attempting to return movie data where name = {movieName}")
     temp = cursor.execute(f"""SELECT * FROM movieData
-                          WHERE movieName = '{movieName}' """)
+                          WHERE movieName = '{movieName}'
+                          """)
     result = cursor.fetchall()
     if len(result) != 0:
         print(f"Movie found in database with name '{movieName}'.")
         return result[0]
     else:
-        print(f"Movie not found in database with name '{movieName}.")
+        print(f"Movie not found in database with name '{movieName}'.")
         movieData = wb.returnMovieDBData(movieName)
         addDataToMovieData(movieData)
-        returnMovieDataByName(movieName) #want movieID for url
+        movieData.ID = returnMovieID(movieData.title)
+        #returnMovieDataByName(movieName) #causing bare issues
+        return movieData 
+
+def returnMovieID(movieName): #useless tbh
+    temp = cursor.execute(f""""SELECT movieID FROM movieData
+                          WHERE movieName = '{movieName}'
+                          """)
+    result = cursor.fetchall()
+    movieID = result[0]
+    return movieID
 
 def returnRandomMovie(): #lol
     temp = cursor.execute("""SELECT * FROM movieData
@@ -138,6 +151,14 @@ def returnRandomMovie(): #lol
                           LIMIT 1""")
     result = cursor.fetchall()[0]
     movieClass = classifyMovieDataSQL(result)
+    return movieClass
+
+def returnPopularMovie():
+    temp = cursor.execute("""SELECT * FROM movieData
+                          ORDER BY movieRating DESC""")
+    result = cursor.fetchall()
+    MovieList = result[0]
+    movieClass = classifyMovieDataSQL(MovieList)
     return movieClass
 
 #Reg
@@ -177,5 +198,10 @@ def checkUserTablePresence(searchVal = None, type = None):
     return True
 
 if __name__ == "__main__":
-    var = returnRandomMovie()
-    print(var)
+    choice = input("Reset movie table? (y = yes)\n")
+    if choice == "y":
+        try:
+            createTableMovieData()
+        except:
+            deleteTableMovieData()
+            createTableMovieData()
