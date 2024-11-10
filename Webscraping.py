@@ -4,8 +4,10 @@ from bs4 import BeautifulSoup #not me
 import urllib.request #not me
 import time #not me
 import SQL #me
+from flask import jsonify
 #selenium - not me
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
@@ -166,9 +168,34 @@ searchBar = driver.find_element(By.CLASS_NAME, "auto-complete")
 driver.quit()
 """
 #Showcase
-    #bs4 works
-"""showcaseSourceURL = urllib.request.urlopen("https://www.showcasecinemas.co.uk/movies/251633-deadpool-and-wolverine/").read()
-soup = BeautifulSoup(showcaseSourceURL, "lxml")"""
+movieName = "Venom"
+showcaseURL = "https://www.showcasecinemas.co.uk"
+options = webdriver.ChromeOptions()
+options.add_argument("start-maximized")
+
+driver = webdriver.Chrome(options=options)
+driver.get(showcaseURL)
+wait = WebDriverWait(driver, 10)
+action = ActionChains(driver)
+time.sleep(5)
+try:
+    print("Pressing un cookies")
+    wait.until(EC.visibility_of_element_located((By.ID, "didomi-notice-agree-button"))).click()
+except:
+    pass
+time.sleep(2)
+print("Pressing on search BUTTON")
+searchButton = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[2]/div[1]/div/div[1]/div[1]/div[2]/header/div/div/div/div[2]/div/div[2]/div[2]/div/svg"))).click()
+time.sleep(2)
+print("Pressing on search INPUT BOX")
+searchBox = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[2]/div[1]/div/div[1]/div[1]/div[2]/header/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/div/div/input"))).click()
+time.sleep(2)
+action.move_to_element(searchBox).click().send_keys(movieName).perform()
+###
+"""
+showcaseSoup = BeautifulSoup(showcaseURL, "html.parser")
+
+"""
 #Vue
 #Cineworld
 #Savoy

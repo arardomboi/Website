@@ -19,7 +19,7 @@ def temp():
 @app.route("/")
 def home():
     print("Rendering home page.")
-    popularMovie = SQL.returnPopularMovie()
+    popularMovie = SQL.returnPopularMovie() #sigma
     randomMovie = SQL.returnRandomMovie()
     return render_template("Home.html", popularMovie = popularMovie, randomMovie = randomMovie)
 
