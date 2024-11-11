@@ -52,5 +52,6 @@ https://www.w3schools.com/python/python_regex.asp RegEx
 https://www.geeksforgeeks.org/redirecting-to-url-in-flask/ redirect inside of python Flask
 x getting data from html form
 https://tedboy.github.io/flask/generated/generated/werkzeug.ImmutableMultiDict.html using multi dict
+https://stackoverflow.com/questions/17388213/find-the-similarity-metric-between-two-strings checking similar strings
 Information on a page:
 Title, Summary, Rating, Release Date, Length,  Director, Genre

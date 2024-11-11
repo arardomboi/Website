@@ -25,17 +25,21 @@ class movieStatsClass:
         self.releaseDate = ReleaseDate
         self.length = Length
         self.director = Director
-        self.genreList = GenreList
+        self.genreString = GenreList
         self.posterLink = posterLink
     
     def returnAsList(self): #bit useless
         return [self.ID, self.title, self.summary, self.rating, self.releaseDate, self.length, self.director, self.genreList, self.posterLink]
     
-    def returnGenreAsString(self):
+    def returnGenreAsString(self): #useless
         genreString = self.genreList[0]
         for genre in self.genreList[1:]:
             genreString += (f", {genre}")
         return genreString
+    
+    def returnGenresAsList(self):
+        genreList = self.genreString.split(",")
+        return genreList
 
 def classifyFromAPI(movieList):
     movieClass = movieStatsClass(movieList[0], movieList[1], movieList[2], movieList[3], movieList[4], movieList[5], movieList[6], movieList[7])
@@ -168,6 +172,7 @@ searchBar = driver.find_element(By.CLASS_NAME, "auto-complete")
 driver.quit()
 """
 #Showcase
+"""
 movieName = "Venom"
 showcaseURL = "https://www.showcasecinemas.co.uk"
 options = webdriver.ChromeOptions()
@@ -191,11 +196,13 @@ print("Pressing on search INPUT BOX")
 searchBox = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[2]/div[1]/div/div[1]/div[1]/div[2]/header/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/div/div/input"))).click()
 time.sleep(2)
 action.move_to_element(searchBox).click().send_keys(movieName).perform()
+"""
 ###
 """
 showcaseSoup = BeautifulSoup(showcaseURL, "html.parser")
 
 """
 #Vue
+
 #Cineworld
 #Savoy

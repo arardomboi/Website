@@ -92,7 +92,7 @@ def convertStringToList(dataString):
 def addDataToMovieData(movieDataClass):
     cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                   (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.returnGenreAsString(), movieDataClass.posterLink))
+                   (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreString, movieDataClass.posterLink))
     conn.commit()
     print("Movie data added to database.")
 
@@ -138,7 +138,7 @@ def returnMovieDataByName(movieName):
         return movieData 
 
 def returnMovieID(movieName): #useless tbh
-    temp = cursor.execute(f""""SELECT movieID FROM movieData
+    temp = cursor.execute(f"""SELECT movieID FROM movieData
                           WHERE movieName = '{movieName}'
                           """)
     result = cursor.fetchall()
@@ -148,14 +148,16 @@ def returnMovieID(movieName): #useless tbh
 def returnRandomMovie(): #lol
     temp = cursor.execute("""SELECT * FROM movieData
                           ORDER BY RANDOM()
-                          LIMIT 1""")
-    result = cursor.fetchall()[0]
+                          LIMIT 1
+                          """)
+    result = cursor.fetchone()[0]
     movieClass = classifyMovieDataSQL(result)
     return movieClass
 
 def returnPopularMovie():
     temp = cursor.execute("""SELECT * FROM movieData
-                          ORDER BY movieRating DESC""")
+                          ORDER BY movieRating DESC
+                          LIMIT 1""")
     result = cursor.fetchall()
     MovieList = result[0]
     movieClass = classifyMovieDataSQL(MovieList)
