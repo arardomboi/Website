@@ -32,7 +32,7 @@ def deleteTableMovieData():
     except:
         print("Error deleting table 'movieData'.")
 
-#Sign Up/ Log In
+#Data Tables
 
 def createTableUserData():
     cursor.execute("""CREATE TABLE userData (

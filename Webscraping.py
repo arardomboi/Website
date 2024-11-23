@@ -127,50 +127,57 @@ def returnMovieDBLikeMovies(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b
     return moviePage
 
 #Odeon
-def returnODEONDates(movieName = None):
-    delay = 0.5
-    firefoxOptions = Options()
-    #firefoxOptions.add_argument("--headless") #Cant see physical page on pc
-    driver = webdriver.Firefox()
-    browser = driver.get("https://www.odeon.co.uk")
-    try:
-        elem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))) #holy weird line
-    except TimeoutError:
+def returnODEONData(movieName = None):
+    #error check
+    if not movieName:
+        return None
+    # open page
+    driverOptions = Options()
+    driver = webdriver.Chrome()
+    try: #try open on ODEON page
+        driver.get("https://www.odeon.co.uk/")
+        time.sleep(2)
+        try: #accept cookies
+            cookiesButton = driver.find_element(By.ID, "onetrust-accept-btn-handler")
+            cookiesButton.click()
+            time.sleep(1)
+        except:
+            pass
+        #search BUTTON
+        searchButton = driver.find_element(By.CLASS_NAME, "banner-icon")
+        searchButton.click()
+        time.sleep(1)
+        #search BOX
+        searchBox = driver.find_element(By.CLASS_NAME, "header-search-input")
+        searchBox.send_keys(movieName)
+        searchBox.send_keys(Keys.RETURN)
+        time.sleep(3)
+        
+        #click on result
+        movieLink = driver.find_element(By.XPATH, "//a[contains(@class, 'film-title')]")
+        movieLink.click()
+        time.sleep(3)  # Wait for the movie page to load
+        
+        # Scrape movie details
+        title = driver.find_element(By.CLASS_NAME, "film-title").text
+        releaseDate = driver.find_element(By.CLASS_NAME, "release-date").text
+        runtime = driver.find_element(By.CLASS_NAME, "runtime").text
+        genre = driver.find_element(By.CLASS_NAME, "genres").text
+        #temp to check if data retrieval is possible
+        movieData = {
+            "Title": title,
+            "Release Date": releaseDate,
+            "Runtime": runtime,
+            "Genre": genre,
+        }
+        print(movieData)
+        return movieData
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
         driver.quit()
-        returnODEONDates(movieName) #restart?
-    driver.find_element(By.ID, "onetrust-accept-btn-handler").click() #click on accept popup
-    driver.find_element(By.CLASS_NAME, "banner-icon").click() #click on search box
-    driver.quit()
 
-"""
-print("ODEON")
-print("init firefox driver")
-firefoxOptions = Options()
-firefoxOptions.add_argument("--headless")
-driver = webdriver.Firefox()
-
-print("open website page")
-
-driver.get("https://www.odeon.co.uk")
-
-print("Sleep")
-#sleep for website to load
-t.sleep(5)
-
-print("Sleep Done.\n Press Accept")
-#press the accept button for ODEN website
-driver.find_element(By.ID, "onetrust-accept-btn-handler").click()
-
-print("Look for search bar.")
-t.sleep(1)
-#click on search button
-driver.find_element(By.CLASS_NAME, "banner-icon").click()
-print("typing in search bar.")
-t.sleep(0.5)
-#find search page
-searchBar = driver.find_element(By.CLASS_NAME, "auto-complete")
-driver.quit()
-"""
+returnODEONData("Wicked")
 #Showcase
 """
 movieName = "Venom"
