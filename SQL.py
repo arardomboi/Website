@@ -75,7 +75,7 @@ def resetTableReviewData():
 
 #Movie DB
 def classifyMovieDataSQL(movieList):
-    movieClass = wb.movieStatsClass(movieList)
+    movieClass = wb.movieStatsClass(movieList[1:])
     return movieClass
 
 def convertListToString(dataList):
