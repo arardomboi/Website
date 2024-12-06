@@ -186,9 +186,9 @@ def checkUserTablePresence(searchVal = None, type = None):
     elif type == "id":
         print("Searching userTable with type of 'id'.", end  = "")
         searchType = "userID"
-        print(f" With given value of {searchVal}")
     else: #type not equal to either user or id
         return False
+    print(f" With given value of {searchVal}.")
     #select where type match
     temp = cursor.execute(f"""SELECT userName FROM userData
                    WHERE {searchType} = '{searchVal}'; 
