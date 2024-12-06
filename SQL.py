@@ -115,8 +115,8 @@ def returnMovieDataByID(movieID):
     #If in database:
     if databaseCheck[0]:
         print("Returning class of movieData")
-        var = wb.classify(databaseCheck[1])
-        return var
+        movieObject = classifyMovieDataSQL(databaeCheck[1])
+        return movieObject
     else:
         return None
     
