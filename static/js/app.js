@@ -10,6 +10,7 @@ function changeBG() {
 function hasNumber(string) {
     return /\d/.test(string);
 }
+
 function checkPassword(password) {
     if (password.length < 8) { 
         return false;

@@ -199,6 +199,31 @@ def checkUserTablePresence(searchVal = None, type = None):
         return False
     return True
 
+#reviews
+class movieReview:
+    def __init__(self, reviewID, movieID, userID, reviewText, movieRating):
+        reviewID = reviewID
+        self.movieID = movieID
+        self.userID = userID
+        self.reviewText = reviewText
+        self.movieRating = movieRating
+
+def convertReviewToClass(list):
+    temp = movieReview(reviewID = list[0], movieID = list[1], userID = list[2], reviewText = list[3], movieRating = list[4])
+    return temp
+
+def addReviewToTable(object):
+    cursor.execute(""""INSERT INTO reviewData (movieID, userID, reviewText, movieRating)
+                   VALUES (?,?,?,?,?);""", (object.moveiID,object.userID,object.reviewText,object.movieRating))
+    conn.commit()
+
+def returnReviewFromMovieID(movieID):
+    cursor.execute(f"""SELECT * FROM reviewData
+                   WHERE movieID = '{movieID}'""")
+    data = cursor.fetchall()
+    reviewList = [convertReviewToClass(item) for item in data]
+    return reviewList
+
 if __name__ == "__main__":
     choice = input("Reset movie table? (y = yes)\n")
     if choice == "y":
