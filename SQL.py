@@ -90,11 +90,17 @@ def convertStringToList(dataString):
     return var
 
 def addDataToMovieData(movieDataClass):
-    cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                   (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreString, movieDataClass.posterLink))
-    conn.commit()
-    print("Movie data added to database.")
+    valid = checkMovieDataTableByID(movieDataClass.ID)
+    if not valid[0]:
+        cursor.execute(""" INSERT INTO movieData (movieName, movieSummary, movieRating, movieReleaseDate, movieLength, movieDirector, movieGenre, moviePosterLink)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
+                    (movieDataClass.title, movieDataClass.summary,movieDataClass.rating, movieDataClass.releaseDate, movieDataClass.length, movieDataClass.director, movieDataClass.genreString, movieDataClass.posterLink))
+        conn.commit()
+        print("Movie data added to database.")
+    elif valid [1]:
+        print("Movie already found in database.")
+    else:
+        print("Error adding movie to database.")
 
 def checkMovieDataTableByID(movieID):
     #Select statement
@@ -212,12 +218,32 @@ def convertReviewToClass(list):
     temp = movieReview(reviewID = list[0], movieID = list[1], userID = list[2], reviewText = list[3], movieRating = list[4])
     return temp
 
-def addReviewToTable(object):
-    cursor.execute(""""INSERT INTO reviewData (movieID, userID, reviewText, movieRating)
-                   VALUES (?,?,?,?,?);""", (object.moveiID,object.userID,object.reviewText,object.movieRating))
-    conn.commit()
+def checkmovieIDValid(movieID):
+    cursor.execute(f"SELECT * FROM movieData WHERE movieID = '{movieID}'")
+    result = cursor.fetchall()
+    if len(result) == 0:
+        return False
+    else:
+        return True
 
-def returnReviewFromMovieID(movieID):
+def checkUserIDValid(userID):
+    cursor.execute(f"SELECT * FROM userData WHERE userID = '{userID}'")
+    result = cursor.fetchall()
+    if len(result) == 0:
+        return False
+    else:
+        return True
+
+def addReviewToTable(object):
+    if checkmovieIDValid(object.movieID) and checkUserIDValid(object.userID):
+        cursor.execute(""""INSERT INTO reviewData (movieID, userID, reviewText, movieRating)
+                    VALUES (?,?,?,?,?);""", (object.moveiID,object.userID,object.reviewText,object.movieRating))
+        conn.commit()
+        print("")
+    else:
+        print("Error with adding review to table")
+
+def returnReviewFromReviewTable(movieID):
     cursor.execute(f"""SELECT * FROM reviewData
                    WHERE movieID = '{movieID}'""")
     data = cursor.fetchall()
