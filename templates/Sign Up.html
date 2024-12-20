@@ -35,7 +35,6 @@
             </div>
         </nav>
         <!--Everything Else-->
-        {{ % if type == 1 % }}
         <div class = "reg-box">
             <h1>Create Your Account:</h1>
             <form action = "/Sign-up" method = "POST">
@@ -60,8 +59,5 @@
                 <input type = "submit" id = submit name = "submit"  value = "Create Account">
             </form>
         </div>
-        {{ % elif type == 2 % }}
-        <h1>Signup type 2</h1>
-        {{endif}}
     </body>
 </html>
