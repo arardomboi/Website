@@ -239,9 +239,9 @@ def addReviewToTable(object):
         cursor.execute(""""INSERT INTO reviewData (movieID, userID, reviewText, movieRating)
                     VALUES (?,?,?,?,?);""", (object.moveiID,object.userID,object.reviewText,object.movieRating))
         conn.commit()
-        print("")
+        print("Review added to table successfully.")
     else:
-        print("Error with adding review to table")
+        print("Error with adding review to table.")
 
 def returnReviewFromReviewTable(movieID):
     cursor.execute(f"""SELECT * FROM reviewData

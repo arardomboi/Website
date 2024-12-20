@@ -86,6 +86,7 @@ def returnMovieDBData(movieName = None, Moviedb_APIKEY = "66ab025a7673a17b6e9789
     for worker in creditData["crew"]:
         if worker["job"] == "Director":
             director = worker["name"]
+            break
     #Getting Genres
     genreList = returnGenreList(movieName)
     genreString = SQL.convertListToString(genreList)
@@ -177,7 +178,7 @@ def returnODEONData(movieName = None):
     finally:
         driver.quit()
 
-returnODEONData("Wicked")
+#returnODEONData("Wicked")
 #Showcase
 """
 movieName = "Venom"
