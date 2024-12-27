@@ -47,6 +47,29 @@ def checkSimilarity(stringA = None, stringB = None):
             return True
     return False
 """
+###
+"""
 movieNames = ["Titanic", "Home Alone", "Home Alone 2", "Inception", "Blade Runner 2049"]
 
 movieObjects = [wb.returnMovieDBData(movieName) for movieName in movieNames]
+"""
+###
+#The Moviedb
+global genreDict
+Moviedb_APIKEY = "66ab025a7673a17b6e9789838dc21fc0"
+#Creating the Genre Dictionary
+genreURL = f"https://api.themoviedb.org/3/genre/movie/list?api_key={Moviedb_APIKEY}"
+response = requests.get(genreURL)
+genreData = response.json()
+genreDict = {genre["id"]: genre["name"] for genre in genreData["genres"]}
+
+genreIDList = []
+genreList = []
+
+for id in genreIDList:
+    genreList.append(genreDict[id])
+
+def convertGenreIDToString(listID):
+    temp = [genreDict[id] for id in listID]
+    return temp
+###

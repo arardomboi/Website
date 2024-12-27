@@ -149,10 +149,10 @@ def returnODEONData(movieName = None):
         searchButton.click()
         time.sleep(1)
         #search BOX
-        searchBox = driver.find_element(By.CLASS_NAME, "header-search-input")
+        searchBox = driver.find_element(By.CLASS_NAME, "auto-complete")
         searchBox.send_keys(movieName)
         searchBox.send_keys(Keys.RETURN)
-        time.sleep(3)
+        time.sleep(5)
         
         #click on result
         movieLink = driver.find_element(By.XPATH, "//a[contains(@class, 'film-title')]")
@@ -178,7 +178,7 @@ def returnODEONData(movieName = None):
     finally:
         driver.quit()
 
-#returnODEONData("Wicked")
+returnODEONData("Wicked")
 #Showcase
 """
 movieName = "Venom"

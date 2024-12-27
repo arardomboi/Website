@@ -1,7 +1,7 @@
 #IMPORTS
 from flask import Flask, render_template, request, redirect, url_for #not me
 import random as ran #not me
-import requests as rq
+import requests as rq #not me
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
