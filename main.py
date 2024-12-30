@@ -38,7 +38,8 @@ def search():
 def moviePage(movieID):
     print(f"Rendering movie page with movieID as {movieID}.")
     movieClass = SQL.returnMovieDataByID(movieID)
-    return render_template("Movie.html", movieClass = movieClass)
+    movieTimes = wb.returnMovieTimes(movieClass.title)
+    return render_template("Movie.html", movieClass = movieClass, movieTimes = movieTimes)
 
 @app.route("/movie/name/<movieName>") #if movie not in db from search
 def movieNameCall(movieName):

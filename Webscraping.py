@@ -5,6 +5,7 @@ import urllib.request #not me
 import time #not me
 import SQL #me
 from flask import jsonify
+import random
 #selenium - not me
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -206,12 +207,47 @@ searchBox = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/d
 time.sleep(2)
 action.move_to_element(searchBox).click().send_keys(movieName).perform()
 """
-###
-"""
-showcaseSoup = BeautifulSoup(showcaseURL, "html.parser")
 
-"""
+def returnShowcaseTimes(movieName):
+    pass
+
 #Vue
+def returnVUETimes(movieName):
+    pass
 
 #Cineworld
+def returnCineworldTimes(movieName):
+    pass
+
 #Savoy
+def returnSavoyTimes(movieName):
+    pass
+
+#all
+class movieTime:
+    def __init__(self, date, timeList, location, link):
+        self.date = date
+        self.timeList = timeList
+        self.location = location
+        self.link = link
+
+def returnMovieTimes(movieName, type = 1):
+    if type == 1: #testing
+        data = []
+        for i in range(10):
+            tempDate = f"{random.randint(1,31)}/{random.randint(1,12)}/{random.randint(1000,9999)}"
+            tempTimeList = [f"{random.randint(1,23)}:{random.randint(00,59)}" for i in range(random.randint(1,5))]
+            tempLoc = "Narnia"
+            tempLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            tempClass = movieTime(date = tempDate, timeList = tempTimeList, location = tempLoc, link = tempLink)
+            data.append(tempClass)
+        return data
+    else:
+        #would return all of the times of a movie from all of the websites
+        ODEONTimes = returnODEONData(movieName)
+        ShowcaseTimes = returnShowcaseTimes(movieName)
+        VUETimes = returnVUETimes(movieName)
+        CineworldTimes = returnCineworldTimes(movieName)
+        SavoyTimes = returnSavoyTimes(movieName)
+        timeList = ODEONTimes + ShowcaseTimes + VUETimes + CineworldTimes + SavoyTimes
+        return timeList

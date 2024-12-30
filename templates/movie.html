@@ -45,5 +45,27 @@
             <h1 class = "movieGenres">Genres: {{movieOjbect.genreString}}</h1>
             <img src = "{{movieObject.posterLink}}">
         </div>
+        <div class = "timetable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in movieTimes %}
+                    <tr>
+                        <td>{{item.date}}</td>
+                        <td>{{item.timeList}}</td>
+                        <td>{{item.location}}</td>
+                        <td><a href="{{item.link}}">Link</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
