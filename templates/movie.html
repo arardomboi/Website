@@ -36,8 +36,14 @@
         </nav>
         <!--Everything Else-->
         <div class="movie-data-primary-box">
-            <img src="{{url_for('static', filename = 'images/popular_movie.png')}}" alt = "Movie Poster" class = "movie-poster">
-            <h1>FIX</h1>
+            <h1 class = "movieTitle">{{movieOjbect.title}}</h1>
+            <h2 class = "movieSummary">Description:{{movieOjbect.summary}}</h2>
+            <h1 class = "movieRating">{{movieOjbect.rating}}</h1>
+            <h1 class = "movieDate">Release Date: {{movieOjbect.releaseDate}}</h1>
+            <h1 class = "movieLength">Length: {{movieOjbect.length}}</h1>
+            <h1 class = "movieDirector">Director: {{movieOjbect.director}}</h1>
+            <h1 class = "movieGenres">Genres: {{movieOjbect.genreString}}</h1>
+            <img src = "{{movieObject.posterLink}}">
         </div>
     </body>
 </html>

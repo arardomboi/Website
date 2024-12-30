@@ -159,24 +159,25 @@ def returnODEONData(movieName = None):
         movieLink.click()
         time.sleep(3)  # Wait for the movie page to load
         
-        # Scrape movie details
-        title = driver.find_element(By.CLASS_NAME, "film-title").text
-        releaseDate = driver.find_element(By.CLASS_NAME, "release-date").text
-        runtime = driver.find_element(By.CLASS_NAME, "runtime").text
-        genre = driver.find_element(By.CLASS_NAME, "genres").text
-        #temp to check if data retrieval is possible
-        movieData = {
-            "Title": title,
-            "Release Date": releaseDate,
-            "Runtime": runtime,
-            "Genre": genre,
-        }
-        print(movieData)
-        return movieData
+        #scrape data
+        dateButtons = driver.find_elements(By.CSS_SELECTOR, 'button.date-button-selector') #find buttons
+        showtimes = {} #init dict
+
+        # Iterate through each date button
+        for dateButton in dateButtons: #traverses through days
+            ActionChains(driver).move_to_element(dateButton).click().perform() #click on certain day
+            time.sleep(2)  #waiting for load
+            date = dateButton.get_attribute('data-date') #get the date
+            timeElements = driver.find_elements(By.CSS_SELECTOR, 'div.showtime-selector') #get elements
+            times = [element.text for element in timeElements] #list of timings for that day
+            showtimes[date] = times #add to dict
+        
+        #return dict
+        return showtimes 
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
-        driver.quit()
+        driver.quit()        
 
 returnODEONData("Wicked")
 #Showcase
