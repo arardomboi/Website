@@ -246,8 +246,11 @@ def returnReviewFromReviewTable(movieID):
     cursor.execute(f"""SELECT * FROM reviewData
                    WHERE movieID = '{movieID}'""")
     data = cursor.fetchall()
-    reviewList = [convertReviewToClass(item) for item in data]
-    return reviewList
+    if len(data) > 0:
+        reviewList = [convertReviewToClass(item) for item in data]
+        return reviewList
+    else:
+        return []
 
 if __name__ == "__main__":
     choice = input("Reset movie table? (y = yes)\n")

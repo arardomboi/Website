@@ -31,7 +31,7 @@ def search():
         return render_template("Search.html", type = 1)
     else: #method == POST
         movieName = request.form.get("movieName")
-        movieDataSet = collateRelevantMovies(movieName)
+        movieDataSet = search.collateRelevantMovies(movieName)
         return render_template("Search.html", type = 2, movieData = movieDataSet)
 
 @app.route("/movie/id/<movieID>") #if movie in db from search

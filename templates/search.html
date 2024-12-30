@@ -35,11 +35,24 @@
             </div>
         </nav>
         <!-- Everything Else-->
-        <div>
-            <form class = "movie-search-box">
+         {% if type == 1 %}
+        <div class = "movie-search-box">
+            <form action = "/search" method = "POST">
                 <label>Movie Name:</label><br>
                 <input type = "text" label = "movieName" id = "movieName">
+                <input type = "submit" id = submit name = "submit"  value = "Search">
             </form>
         </div>
+        {% elif type == 2 %}
+        <div class = "search-results">
+            {% for movie in movieData %}
+            <div class = "movieDataInstance">
+                <h1>Title:{{movie.title}}</h1>
+                <h2>{{movie.summary}}</h2>
+                <h2>Rating: {{movie.rating}}</h2>
+            </div>
+        </div>
+        {%endfor%}
+        {% endif %}
     </body>
 </html>
