@@ -5,6 +5,7 @@ import requests as rq #not me
 import SQL #me
 import Registration as reg #me
 import Webscraping as wb #me
+import search #me
 #PYTHON
 
 #FLASK
@@ -23,10 +24,15 @@ def home():
     #randomMovie = SQL.returnRandomMovie()
     return render_template("Home.html")
 
-@app.route("/search")
+@app.route("/search", methods = ["GET, POST"])
 def search():
-    print("Rendering Search page")
-    return render_template("Search.html")
+    if request.method == "GET": #first visit
+        print("Rendering Search page")
+        return render_template("Search.html", type = 1)
+    else: #method == POST
+        movieName = request.form.get("movieName")
+        movieDataSet = collateRelevantMovies(movieName)
+        return render_template("Search.html", type = 2, movieData = movieDataSet)
 
 @app.route("/movie/id/<movieID>") #if movie in db from search
 def moviePage(movieID):
